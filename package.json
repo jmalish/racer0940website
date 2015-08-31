@@ -1,0 +1,12 @@
+{
+  "name": "racer0940website",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "ejs": "~2.3.3",
+    "express": "~4.13.1"
+  }
+}
