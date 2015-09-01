@@ -5,31 +5,30 @@
     <head>
         <% include ../partials/head.ejs %>
     </head>
-    <body class="container">
-        <header>
-            <% include ../partials/header.ejs %>
-        </header>
+    <body>
+        <div class="wrapper">
+            <header>
+                <% include ../partials/header.ejs %>
+            </header>
 
-        <main>
-            <div class="jumbotron">
-                <h1>This is great</h1>
-                <p>Welcome to templating using EJS!</p>
+            <main>
+                <h1>Index</h1>
+                <p>This is the main content of the index page.</p>
 
-                <h2>Variable</h2>
-                <p><%= tagline %></p>
+                <div class="twitch">
+                    <% if (isLive) { %>
+                        <div class="player"><iframe src="http://www.twitch.tv/racer0940/embed" frameborder="0" scrolling="no" height="378" width="620"></iframe></div>
+                        <div class="chat"><iframe src="http://www.twitch.tv/racer0940/chat?popout=" frameborder="0" scrolling="no" height="500" width="350"></iframe></div>
+                    <% } else { %>
+                        <p>Bummer! Looks like racer's not streaming at the moment. In the meantime, check out some of his videos on youtube.</p>
+                        <iframe width="560" height="315" src="https://www.youtube.com/embed/ZBO3Eb0QJ9E" frameborder="0" allowfullscreen></iframe>
+                    <% } %>
+                </div>
+            </main>
 
-                <h2>Loop</h2>
-                <ul>
-                    <% drinks.forEach(function(drink) { %>
-                    <li><%= drink.name %> - <%= drink.drunkness %></li>
-                    <% }); %>
-                </ul>
-            </div>
-        </main>
-
-        <footer>
-            <% include ../partials/footer.ejs %>
-        </footer>
-
+            <footer>
+                <% include ../partials/footer.ejs %>
+            </footer>
+        </div>
     </body>
 </html>
