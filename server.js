@@ -3,6 +3,7 @@
 var express = require('express');
 var app = express();
 var request = require('request');
+var fs = require('fs');
 
 // setting view engine to use ejs
 app.set('view engine', 'ejs');
@@ -23,10 +24,14 @@ app.get('/', function(req, res) {
     }, function(error, response, body){
         // if twitch says the channel is not live, hide the player
         if (body.stream === null) {
+            var data = fs.readFileSync('secrets.json');
+            var secrets = JSON.parse(data);
+            var youtubeAPIkey  = secrets.apiKeys.youtube;
+
             // since no stream is on, I want to show two random videos from my youtube channel (racer0940tv)
             // https:www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=UUkUuHpGDYHTW-I3Wvlwpf4g&maxResults=20&key=AIzaSyCo36ATPVxuATJJpSDHZtQ9ChZ-K9hkh9s
             request({
-                url: 'https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=UUkUuHpGDYHTW-I3Wvlwpf4g&maxResults=20&key=AIzaSyCo36ATPVxuATJJpSDHZtQ9ChZ-K9hkh9s',
+                url: 'https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=UUkUuHpGDYHTW-I3Wvlwpf4g&maxResults=20&key=' + youtubeAPIkey,
                 json: true
             }, function(error, response, body) {
                 // get latest video
@@ -70,12 +75,11 @@ app.get('/about', function (req, res) {
 
 // testing page
 app.get('/test', function (req, res) {
-    // generate a random number between 1 and 20 (don't want 0, that's the latest video)
-    var rand = Math.floor(Math.random() * 19) + 1;
+
+
 
     res.render('pages/test',
-        {title: 'test',
-         random: rand}
+        {title: 'test'}
     );
 });
 
