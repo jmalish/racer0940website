@@ -12,16 +12,24 @@
             </header>
 
             <main>
-                <h1>Index</h1>
-                <p>This is the main content of the index page.</p>
-
-                <div class="twitch">
+                <div class="videoBox">
                     <% if (isLive) { %>
                         <div class="player"><iframe src="http://www.twitch.tv/racer0940/embed" frameborder="0" scrolling="no" height="378" width="620"></iframe></div>
                         <div class="chat"><iframe src="http://www.twitch.tv/racer0940/chat?popout=" frameborder="0" scrolling="no" height="500" width="350"></iframe></div>
                     <% } else { %>
-                        <p>Bummer! Looks like racer's not streaming at the moment. In the meantime, check out some of his videos on youtube.</p>
-                        <iframe width="560" height="315" src="https://www.youtube.com/embed/ZBO3Eb0QJ9E" frameborder="0" allowfullscreen></iframe>
+                        <p>Bummer! Looks like racer's not streaming at the moment. In the meantime, check out some of his videos on youtube.<br>
+                            You can also <a href="www.twitch.tv/racer0940">follow racer on twitch</a> to get notified when he goes live. </p>
+                        <div class="latestVideo">
+                            <h3>Latest video:</h3>
+                            <iframe width="560" height="315" src="<%= latestVid %>" frameborder="0" allowfullscreen></iframe>
+                            <p><%= latestVidDesc %></p>
+                        </div>
+                        <div class="randomVideo">
+                            <h3>Random video:</h3>
+                            <iframe width="560" height="315" src="<%= randVid %>" frameborder="0" allowfullscreen></iframe>
+                            <p><%= randVidDesc %></p>
+                        </div>
+                        <p>For more videos, be sure to <a href="https://www.youtube.com/subscription_center?add_user=racer0940tv">subscribe to racer on youtube</a>.</p>
                     <% } %>
                 </div>
             </main>
