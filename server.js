@@ -43,24 +43,32 @@ app.get('/', function(req, res) {
                 var randomVideo = 'https://www.youtube.com/embed/' + body.items[rand].snippet.resourceId.videoId;
                 var randomVideoDescription = body.items[rand].snippet.description;
 
-
+                // offline render (youtube vids and info)
                 res.render('pages/', {
                     title:'racer0940.com :: Home',
                     isLive: false,
                     latestVid: latestVideo,
                     latestVidDesc: latestVideoDescription,
                     randVid: randomVideo,
-                    randVidDesc: randomVideoDescription
+                    randVidDesc: randomVideoDescription,
+                    twitchTitle: null,
+                    twitchGame: null
                 });
             });
         } else { // show the player
+            var twitchStreamGame = body.stream.game;
+            var twitchStreamTitle = body.stream.channel.status;
+
+            // live render (twitch player and info)
             res.render('pages/', {
                 title:'racer0940.com :: Home',
                 isLive: true,
                 latestVid: null,
                 latestVidDesc: null,
                 randVid: null,
-                randVidDesc: null
+                randVidDesc: null,
+                twitchTitle: twitchStreamTitle,
+                twitchGame: twitchStreamGame
             });
         }
     });

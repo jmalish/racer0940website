@@ -14,9 +14,15 @@
             <main>
                 <div class="videoBox">
                     <% if (isLive) { %>
+                        <!-- stream is live, show twitch stuff -->
+                        <div class="twitchInfo">
+                            <h2 class="twitchTitle"><%= twitchTitle %></h2>
+                            <p class="twitchGame">playing <b><%= twitchGame %></b></p>
+                        </div>
                         <div class="player"><iframe src="http://www.twitch.tv/racer0940/embed" frameborder="0" scrolling="no" height="378" width="620"></iframe></div>
                         <div class="chat"><iframe src="http://www.twitch.tv/racer0940/chat?popout=" frameborder="0" scrolling="no" height="500" width="350"></iframe></div>
                     <% } else { %>
+                        <!-- stream is offline, show youtube stuff -->
                         <p>Bummer! Looks like racer's not streaming at the moment. In the meantime, check out some of his videos on youtube.<br>
                             You can also <a href="www.twitch.tv/racer0940">follow racer on twitch</a> to get notified when he goes live. </p>
                         <div class="latestVideo">

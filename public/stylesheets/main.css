@@ -122,3 +122,13 @@ footer p {
     width: 65%;
     margin: auto;
 }
+
+.twitchInfo {
+    width: 70%;
+    margin: auto;
+    text-align: left;
+}
+
+.twitchInfo p, .twitchTitle {
+    margin: 5px 0;
+}
