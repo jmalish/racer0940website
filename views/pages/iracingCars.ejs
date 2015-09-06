@@ -1,0 +1,36 @@
+<!-- views/pages/iracingCars.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <% include ../partials/head %>
+</head>
+
+<body class="container">
+    <div class="wrapper">
+        <header>
+            <% include ../partials/header %>
+        </header>
+        <main>
+            <table>
+                <tr>
+                    <th>Image</th>
+                    <th>iRacing ID</th>
+                    <th>Name</th>
+                    <th>Default Content</th>
+                </tr>
+                    <% cars.forEach(function(car){ %>
+                        <tr>
+                            <td><img class="carImage" src="\images\carPortraits\<%= car.imageURL %>"/></td>
+                            <td><%= car.iRacingId %></td>
+                            <td><%= car.name %></td>
+                            <td><%= car.isDefaultContent %></td>
+                        </tr>
+                    <% }); %>
+            </table>
+        </main>
+        <footer>
+            <% include ../partials/footer %>
+        </footer>
+    </div>
+</body>
+</html>

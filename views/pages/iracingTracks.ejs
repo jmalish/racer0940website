@@ -1,0 +1,34 @@
+<!-- views/pages/iracingCars.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <% include ../partials/head %>
+</head>
+
+<body class="container">
+    <div class="wrapper">
+        <header>
+            <% include ../partials/header %>
+        </header>
+        <main>
+            <table>
+                <tr>
+                    <th>Logo</th>
+                    <th>Name</th>
+                    <th>Is Default Content</th>
+                </tr>
+                    <% tracks.forEach(function(track){ %>
+                        <tr>
+                            <td><a href="<%= track.trackWebsiteURL %>"><img class="trackLogo" src="\images\trackLogos\<%= track.trackLogoURL %>"/></a></td>
+                            <td><%= track.name %></td>
+                            <td><%= track.isDefaultContent %></td>
+                        </tr>
+                    <% }); %>
+            </table>
+        </main>
+        <footer>
+            <% include ../partials/footer %>
+        </footer>
+    </div>
+</body>
+</html>

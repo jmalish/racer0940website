@@ -4,6 +4,7 @@ var express = require('express');
 var app = express();
 var request = require('request');
 var fs = require('fs');
+var mysql = require('mysql');
 
 // setting view engine to use ejs
 app.set('view engine', 'ejs');
@@ -11,12 +12,28 @@ app.set('view engine', 'ejs');
 // telling server to use public folder
 app.use(express.static(__dirname + '/public'));
 
+// setting up mysql
+var sqlConnection = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: '',
+    database: 'iracing'
+});
+sqlConnection.connect(function (err) {
+    if (err) {
+        console.error("Unable to connect to SQL database:\n" + err)
+        return;
+    }
+
+    console.log("Successfully connected to SQL database with thread id " + sqlConnection.threadId);
+});
+
+
 ///////////
 // PAGES //
 ///////////
 // index page
 app.get('/', function(req, res) {
-
     // get json from twitch
     request({
         url: 'https://api.twitch.tv/kraken/streams/racer0940',
@@ -61,7 +78,7 @@ app.get('/', function(req, res) {
 
             // live render (twitch player and info)
             res.render('pages/', {
-                title:'racer0940.com :: Home',
+                title:'Home :: racer0940.com',
                 isLive: true,
                 latestVid: null,
                 latestVidDesc: null,
@@ -83,13 +100,56 @@ app.get('/about', function (req, res) {
 
 // testing page
 app.get('/test', function (req, res) {
-
-
-
     res.render('pages/test',
         {title: 'test'}
     );
 });
+
+// cars page
+app.get('/iracingCars', function(req, res) {
+
+    sqlConnection.query('SELECT * FROM cars', function(err, rows) {
+        if (!err) {
+            res.render('pages/iracingCars', {
+                title: 'iRacing Cars :: racer0940.com',
+                'cars': rows
+            });
+        } else {
+            console.log(err.stack);
+        }
+    });
+});
+
+// tracks page
+app.get('/iracingTracks', function(req, res) {
+
+    sqlConnection.query('SELECT * FROM tracks', function(err, rows) {
+        if (!err) {
+            res.render('pages/iracingTracks', {
+                title: 'iRacing Tracks :: racer0940.com',
+                'tracks': rows
+            });
+        } else {
+            console.log(err.stack);
+        }
+    });
+});
+
+// configs page
+app.get('/iracingConfigs', function(req, res) {
+
+    sqlConnection.query('SELECT * FROM configs', function(err, rows) {
+        if (!err) {
+            res.render('pages/iracingConfigs', {
+                title: 'iRacing Confgurations :: racer0940.com',
+                'configs': rows
+            });
+        } else {
+            console.log(err.stack);
+        }
+    });
+});
+
 
 // 404 (THIS ALWAYS NEEDS TO BE LAST)
 app.get('*', function (req, res) {

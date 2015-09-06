@@ -132,3 +132,14 @@ footer p {
 .twitchInfo p, .twitchTitle {
     margin: 5px 0;
 }
+
+table, th, tr, td {
+    border: solid 1px black;
+    border-collapse: collapse;
+    padding: 5px;
+}
+
+table .carImage, .trackLogo, .configImage {
+    height: 100px;
+    width: auto;
+}

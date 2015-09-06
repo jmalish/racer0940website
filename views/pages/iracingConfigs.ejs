@@ -1,0 +1,38 @@
+<!-- views/pages/iracingCars.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <% include ../partials/head %>
+</head>
+
+<body class="container">
+    <div class="wrapper">
+        <header>
+            <% include ../partials/header %>
+        </header>
+        <main>
+            <table>
+                <tr>
+                    <th>Image</th>
+                    <th>Parent Track ID</th>
+                    <th>Config Name</th>
+                    <th>Oval</th>
+                    <th>Has Night</th>
+                </tr>
+                    <% configs.forEach(function(config){ %>
+                        <tr>
+                            <td><img class="configImage" src="images\trackLayouts/<%= config.configLayoutImageURL %>"/></td>
+                            <td><%= config.trackId %></td>
+                            <td><%= config.name %></td>
+                            <td><%= config.isOval %></td>
+                            <td><%= config.hasNight %></td>
+                        </tr>
+                    <% }); %>
+            </table>
+        </main>
+        <footer>
+            <% include ../partials/footer %>
+        </footer>
+    </div>
+</body>
+</html>
