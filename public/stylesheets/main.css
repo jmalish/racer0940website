@@ -160,3 +160,50 @@ table .carImage, table .trackLogo, table .configImage {
 a {
     color: black;
 }
+
+.randomRace {
+    width: 85%;
+}
+
+.carDetails {
+    width: 30%;
+    vertical-align: top;
+    text-align: right;
+}
+
+.trackDetails {
+    width: 70%;
+    vertical-align: top;
+}
+
+.randomRace, .randomRace tr, .randomRace td {
+    border: none;
+}
+
+.randomRace .trackImages {
+    vertical-align: top;
+}
+
+.randomRace img {
+    height: 250px;
+    width: auto;
+}
+
+.randomRace .trackLogo {
+    height: 100px;
+    width: auto;
+    vertical-align: top;
+}
+
+.randomRace .configImage {
+    height: 250px;
+    width: auto;
+}
+
+.randomRace td:nth-of-type(1) {
+    text-align: right;
+}
+
+.randomRaceForm {
+    text-align: left;;
+}

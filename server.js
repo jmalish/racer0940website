@@ -6,6 +6,7 @@ var request = require('request');
 var fs = require('fs');
 var mysql = require('mysql');
 var bodyparser = require('body-parser');
+var async = require('async');
 
 // setting view engine to use ejs
 app.set('view engine', 'ejs');
@@ -49,7 +50,6 @@ app.get('/', function(req, res) {
             var youtubeAPIkey  = secrets.apiKeys.youtube;
 
             // since no stream is on, I want to show two random videos from my youtube channel (racer0940tv)
-            // https:www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=UUkUuHpGDYHTW-I3Wvlwpf4g&maxResults=20&key=AIzaSyCo36ATPVxuATJJpSDHZtQ9ChZ-K9hkh9s
             request({
                 url: 'https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=UUkUuHpGDYHTW-I3Wvlwpf4g&maxResults=20&key=' + youtubeAPIkey,
                 json: true
@@ -99,13 +99,6 @@ app.get('/about', function (req, res) {
     res.render('pages/about', {
         title:'racer0940.com :: About'
     });
-});
-
-// testing page
-app.get('/test', function (req, res) {
-    res.render('pages/test',
-        {title: 'test'}
-    );
 });
 
 // cars page
@@ -243,7 +236,88 @@ app.post('/iracingConfigs', function(req, res) {
     });
 });
 
+// randomRace page
+app.get('/randomRace', function (req, res) {
 
+    var myQueryCar = "SELECT * FROM cars";
+    var myQueryTrack = "SELECT * FROM tracks AS t INNER JOIN configs AS c ON t.track_id=c.trackId";
+    var selectedCar, selectedTrack;
+
+    sqlConnection.query(myQueryCar, function(err, rows) {
+        var rand = Math.floor(Math.random() * rows.length);
+        selectedCar = rows[rand];
+
+        sqlConnection.query(myQueryTrack, function(err, rows) {
+            rand = Math.floor(Math.random() * rows.length);
+            selectedTrack = rows[rand];
+
+            res.render('pages/randomRace', {
+                    title: 'Random Race Generator :: racer0940.com',
+                    car: selectedCar,
+                    track: selectedTrack,
+                    defaultFilterPost: "Any",
+                    ovalFilter: "Any",
+                    nightFilter: "Any"
+                }
+            );
+        });
+    });
+});
+
+app.post('/randomRace', function (req, res) {
+
+    var first = true;
+    var myQueryCar = "SELECT * FROM cars";
+    var myQueryTrack = "SELECT * FROM tracks AS t INNER JOIN configs AS c ON t.track_id=c.trackId";
+    var selectedCar, selectedTrack;
+    var defaultFilter = req.body.defaultFilter;
+    var ovalFilter = req.body.ovalFilter;
+    var nightFilter = req.body.nightFilter;
+
+
+    if (defaultFilter != "Any") {
+        myQueryCar += " WHERE cars.car_isDefaultContent = " + defaultFilter;
+        myQueryTrack += " WHERE t.track_isDefaultContent = " + defaultFilter;
+        first = false;
+    }
+
+    if (ovalFilter != "Any") {
+        if (first) {
+            myQueryTrack += " WHERE c.isOval = " + ovalFilter;
+            first = false;
+        } else {
+            myQueryTrack += " AND c.isOval = " + ovalFilter;
+        }
+    }
+
+    if (nightFilter != "Any") {
+        if (first) {
+            myQueryTrack += " WHERE c.hasNight = " + nightFilter;
+        } else {
+            myQueryTrack += " AND c.hasNight = " + nightFilter;
+        }
+    }
+
+    sqlConnection.query(myQueryCar, function (err, rows) {
+        var rand = Math.floor(Math.random() * rows.length);
+        selectedCar = rows[rand];
+
+        sqlConnection.query(myQueryTrack, function (err, rows) {
+            rand = Math.floor(Math.random() * rows.length);
+            selectedTrack = rows[rand];
+
+            res.render('pages/randomRace', {
+                    title: 'Random Race Generator :: racer0940.com',
+                    car: selectedCar,
+                    track: selectedTrack,
+                    defaultFilterPost: defaultFilter,
+                    ovalFilter: ovalFilter,
+                    nightFilter: nightFilter
+                }
+            );
+        });
+    });
+});
 
 // 404 (THIS ALWAYS NEEDS TO BE LAST)
 app.get('*', function (req, res) {
