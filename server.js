@@ -130,9 +130,6 @@ app.post('/iracingCars', function(req, res) {
     var isDefault = req.body.defaultFilter;
     var myQuery = "SELECT * FROM cars";
 
-    console.log(search);
-    console.log(isDefault);
-
     if ((search != "") || (search == null)) {
         myQuery = "SELECT * FROM cars WHERE car_name LIKE '%" + req.body.search + "%'";
         first = false;
@@ -236,8 +233,6 @@ app.post('/iracingConfigs', function(req, res) {
     if (nightFilter != 'Any') {
         myQuery += " AND c.hasNight = " + nightFilter;
     }
-
-    console.log(myQuery);
 
     sqlConnection.query(myQuery, function(err, rows) {
         res.render('pages/iracingConfigs', {
