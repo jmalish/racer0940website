@@ -137,9 +137,26 @@ table, th, tr, td {
     border: solid 1px black;
     border-collapse: collapse;
     padding: 5px;
+
 }
 
-table .carImage, .trackLogo, .configImage {
+table .carImage, table .trackLogo, table .configImage {
     height: 100px;
     width: auto;
+}
+
+.carForm table, .carForm th, .carForm tr, .carForm td {
+    border: none;
+}
+
+.trackForm table, .trackForm th, .trackForm tr, .trackForm td {
+    border: none;
+}
+
+.configForm table, .configForm th, .configForm tr, .configForm td {
+    border: none;
+}
+
+a {
+    color: black;
 }

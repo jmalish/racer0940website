@@ -5,12 +5,16 @@ var app = express();
 var request = require('request');
 var fs = require('fs');
 var mysql = require('mysql');
+var bodyparser = require('body-parser');
 
 // setting view engine to use ejs
 app.set('view engine', 'ejs');
 
-// telling server to use public folder
-app.use(express.static(__dirname + '/public'));
+// general app setup
+app.use(express.static(__dirname + '/public'))
+    .use(bodyparser.urlencoded({ extended: false}))
+    .use(bodyparser.json());
+
 
 // setting up mysql
 var sqlConnection = mysql.createConnection({
@@ -27,7 +31,6 @@ sqlConnection.connect(function (err) {
 
     console.log("Successfully connected to SQL database with thread id " + sqlConnection.threadId);
 });
-
 
 ///////////
 // PAGES //
@@ -107,48 +110,144 @@ app.get('/test', function (req, res) {
 
 // cars page
 app.get('/iracingCars', function(req, res) {
-
     sqlConnection.query('SELECT * FROM cars', function(err, rows) {
         if (!err) {
             res.render('pages/iracingCars', {
                 title: 'iRacing Cars :: racer0940.com',
-                'cars': rows
+                cars: rows,
+                search: ""
             });
         } else {
             console.log(err.stack);
+        }
+    });
+});
+
+app.post('/iracingCars', function(req, res) {
+
+    var first = true;
+    var search = req.body.search;
+    var isDefault = req.body.defaultFilter;
+    var myQuery = "SELECT * FROM cars";
+
+    console.log(search);
+    console.log(isDefault);
+
+    if ((search != "") || (search == null)) {
+        myQuery = "SELECT * FROM cars WHERE car_name LIKE '%" + req.body.search + "%'";
+        first = false;
+    }
+
+    if (isDefault != 'Any') {
+        if (!first) {
+            myQuery += " AND car_isDefaultContent = " + isDefault;
+        } else {
+            myQuery = "SELECT * FROM cars WHERE car_isDefaultContent = " + isDefault;
+        }
+    }
+
+    sqlConnection.query(myQuery, function(err, rows) {
+        if (!err) {
+            res.render('pages/iracingCars', {
+                title: 'iRacing Cars :: racer0940.com',
+                cars: rows,
+                search: search
+            });
+        } else {
+            console.error(err.stack);
         }
     });
 });
 
 // tracks page
 app.get('/iracingTracks', function(req, res) {
-
     sqlConnection.query('SELECT * FROM tracks', function(err, rows) {
         if (!err) {
             res.render('pages/iracingTracks', {
                 title: 'iRacing Tracks :: racer0940.com',
-                'tracks': rows
+                tracks: rows,
+                search: ""
             });
         } else {
             console.log(err.stack);
         }
+    });
+});
+
+app.post('/iracingTracks', function(req, res) {
+    var first = true;
+    var search = req.body.search;
+    var isDefault = req.body.defaultFilter;
+    var myQuery = "SELECT * FROM tracks";
+
+    if ((search != "") || (search == null)) {
+        myQuery = "SELECT * FROM tracks WHERE track_name LIKE '%" + req.body.search + "%'";
+        first = false;
+    }
+
+    if (isDefault != 'Any') {
+        if (!first) {
+            myQuery += " AND track_isDefaultContent = " + isDefault;
+        } else {
+            myQuery = "SELECT * FROM tracks WHERE track_isDefaultContent = " + isDefault;
+        }
+    }
+
+    sqlConnection.query(myQuery, function(err, rows) {
+        res.render('pages/iracingTracks', {
+            title: 'iRacing Tracks :: racer0940.com',
+            tracks: rows,
+            search: search
+        });
     });
 });
 
 // configs page
 app.get('/iracingConfigs', function(req, res) {
 
-    sqlConnection.query('SELECT * FROM configs', function(err, rows) {
+    sqlConnection.query('SELECT * FROM tracks AS parent INNER JOIN configs ON parent.track_id=configs.trackId', function(err, rows) {
         if (!err) {
             res.render('pages/iracingConfigs', {
                 title: 'iRacing Confgurations :: racer0940.com',
-                'configs': rows
+                configs: rows,
+                search: ""
             });
         } else {
             console.log(err.stack);
         }
     });
 });
+
+
+app.post('/iracingConfigs', function(req, res) {
+    var search = req.body.search;
+    var ovalFilter = req.body.ovalFilter;
+    var nightFilter = req.body.nightFilter;
+    var myQuery = "SELECT * FROM tracks AS t INNER JOIN configs AS c ON t.track_id=c.trackId";
+
+    if (search != "") {
+        myQuery += " WHERE c.config_name LIKE '%" + req.body.search + "%'";
+    }
+
+    if (ovalFilter != 'Any') {
+        myQuery += " AND c.isOval = " + ovalFilter;
+    }
+
+    if (nightFilter != 'Any') {
+        myQuery += " AND c.hasNight = " + nightFilter;
+    }
+
+    console.log(myQuery);
+
+    sqlConnection.query(myQuery, function(err, rows) {
+        res.render('pages/iracingConfigs', {
+            title: 'iRacing Tracks :: racer0940.com',
+            configs: rows,
+            search: search
+        });
+    });
+});
+
 
 
 // 404 (THIS ALWAYS NEEDS TO BE LAST)
