@@ -8,7 +8,7 @@ Additionally is a place to easily view cars and tracks available on the iRacing.
 To install, you need to:
 - run 'npm install'
 - extract images.zip into the images folder
-- create a secrets.json file (See below for instructions).
+- create a secrets.json file ([See below](#secretsjson) for instructions).
 - run 'node server.js'  (nodemon will also work if that is installed globally)
 
 
