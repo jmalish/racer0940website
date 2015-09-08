@@ -18,15 +18,16 @@ app.use(express.static(__dirname + '/public'))
 
 
 // setting up mysql
+var mysqlpwd  = secrets.passwords.mysql;
 var sqlConnection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: '',
+    password: mysqlpwd,
     database: 'iracing'
 });
 sqlConnection.connect(function (err) {
     if (err) {
-        console.error("Unable to connect to SQL database:\n" + err)
+        console.error("Unable to connect to SQL database:\n" + err);
         return;
     }
 
