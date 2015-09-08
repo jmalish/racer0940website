@@ -332,5 +332,5 @@ app.get('*', function (req, res) {
 //////////////////
 // Server Stuff //
 //////////////////
-app.listen(8080);
-console.log('Server running on port 8080');
+app.listen(80);
+console.log('Server running on port 80');
