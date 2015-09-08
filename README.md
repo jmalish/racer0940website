@@ -1,8 +1,9 @@
 # racer0940.com
 
-Soon to be home of everything racer0940 in one place... except that stuff... weirdo
+Home of racer0940 and racer0940 accessories.
 
-Additionally is a place to easily view cars and tracks available on the iRacing.com service.
+Primarily a place to easily view cars and tracks available on the iRacing.com service.  
+  Hopefully more to come in the future
 
 ## installation
 To install, you need to:
