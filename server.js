@@ -20,7 +20,7 @@ app.use(express.static(__dirname + '/public'))
 // setting up mysql
 var data = fs.readFileSync('secrets.json');
 var secrets = JSON.parse(data);
-var mysqlpwd  = secrets.passwords.mysql;
+var mysqlpwd = secrets.passwords.mysql;
 var sqlConnection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
