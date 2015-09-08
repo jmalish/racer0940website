@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 06, 2015 at 10:41 PM
+-- Generation Time: Sep 08, 2015 at 04:03 AM
 -- Server version: 5.6.26
 -- PHP Version: 5.6.12
 
@@ -27,12 +27,12 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE IF NOT EXISTS `cars` (
-  `id` int(11) NOT NULL,
-  `name` text NOT NULL,
+  `car_id` int(11) NOT NULL,
+  `car_name` text NOT NULL,
   `shortName` text NOT NULL,
   `displayName` text NOT NULL,
   `folderName` text NOT NULL,
-  `isDefaultContent` tinyint(1) NOT NULL,
+  `car_isDefaultContent` tinyint(1) NOT NULL,
   `iRacingId` int(11) NOT NULL,
   `imageURL` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS `cars` (
 -- Dumping data for table `cars`
 --
 
-INSERT INTO `cars` (`id`, `name`, `shortName`, `displayName`, `folderName`, `isDefaultContent`, `iRacingId`, `imageURL`) VALUES
+INSERT INTO `cars` (`car_id`, `car_name`, `shortName`, `displayName`, `folderName`, `car_isDefaultContent`, `iRacingId`, `imageURL`) VALUES
 (0, 'Mazda MX-5 Roadster', 'mx5_roadster', 'MX5 Roadster', 'mx5 roadster', 1, 35, 'mx5_roadster.bmp'),
 (1, 'Mazda MX-5 Cup', 'mx5_cup', 'MX5 Cup', 'mx5 cup', 1, 34, 'mx5_cup.bmp'),
 (2, 'Star Mazda', 'starmazda', 'StarMazda', 'formulamazda', 0, 4, 'formulamazda.bmp'),
@@ -99,10 +99,10 @@ INSERT INTO `cars` (`id`, `name`, `shortName`, `displayName`, `folderName`, `isD
 --
 
 CREATE TABLE IF NOT EXISTS `configs` (
-  `id` int(11) NOT NULL,
+  `config_id` int(11) NOT NULL,
   `iracingId` int(11) NOT NULL,
   `trackId` int(11) NOT NULL,
-  `name` text NOT NULL,
+  `config_name` text NOT NULL,
   `isOval` tinyint(1) NOT NULL,
   `hasNight` tinyint(1) NOT NULL,
   `pitstallCount` int(11) NOT NULL,
@@ -113,7 +113,7 @@ CREATE TABLE IF NOT EXISTS `configs` (
 -- Dumping data for table `configs`
 --
 
-INSERT INTO `configs` (`id`, `iracingId`, `trackId`, `name`, `isOval`, `hasNight`, `pitstallCount`, `configLayoutImageURL`) VALUES
+INSERT INTO `configs` (`config_id`, `iracingId`, `trackId`, `config_name`, `isOval`, `hasNight`, `pitstallCount`, `configLayoutImageURL`) VALUES
 (0, 52, 23, 'Legends Oval', 1, 0, 26, 'atlantaspeedway_LegendsOval.jpg'),
 (1, 51, 23, 'Road Course', 0, 0, 43, 'atlantaspeedway_RoadCourse.jpg'),
 (2, 53, 23, 'Oval', 1, 0, 43, 'atlantaspeedway_Oval.jpg'),
@@ -302,7 +302,8 @@ INSERT INTO `configs` (`id`, `iracingId`, `trackId`, `name`, `isOval`, `hasNight
 (185, 236, 1018, 'Oval w/open dogleg', 1, 1, 44, 'phoenix_OvalWithopendogleg.jpg'),
 (186, 233, 1019, 'GP', 0, 0, 34, 'donington_GP.jpg'),
 (187, 234, 1019, 'National', 0, 0, 34, 'donington_National.jpg'),
-(188, 237, 1020, 'Oval', 1, 1, 42, 'gateway_Oval.jpg');
+(188, 237, 1020, 'Oval', 1, 1, 42, 'gateway_Oval.jpg'),
+(189, 238, 1020, 'Road', 0, 1, 42, 'gateway_Road.jpg');
 
 -- --------------------------------------------------------
 
@@ -311,10 +312,10 @@ INSERT INTO `configs` (`id`, `iracingId`, `trackId`, `name`, `isOval`, `hasNight
 --
 
 CREATE TABLE IF NOT EXISTS `tracks` (
-  `id` int(11) NOT NULL,
-  `name` text NOT NULL,
+  `track_id` int(11) NOT NULL,
+  `track_name` text NOT NULL,
   `shortName` text NOT NULL,
-  `isDefaultContent` tinyint(1) NOT NULL,
+  `track_isDefaultContent` tinyint(1) NOT NULL,
   `trackWebsiteURL` text NOT NULL,
   `trackLogoURL` text NOT NULL,
   `mapImageURL` text NOT NULL
@@ -324,7 +325,7 @@ CREATE TABLE IF NOT EXISTS `tracks` (
 -- Dumping data for table `tracks`
 --
 
-INSERT INTO `tracks` (`id`, `name`, `shortName`, `isDefaultContent`, `trackWebsiteURL`, `trackLogoURL`, `mapImageURL`) VALUES
+INSERT INTO `tracks` (`track_id`, `track_name`, `shortName`, `track_isDefaultContent`, `trackWebsiteURL`, `trackLogoURL`, `mapImageURL`) VALUES
 (1, 'Road Atlanta', 'roadatlanta', 0, 'http://www.roadatlanta.com', 'roadatlantaLogo.jpg', 'roadatlantaMap.jpg'),
 (2, 'Barber Motorsports Park', 'barber', 0, 'http://www.barbermotorsports.com/', 'barberLogo.jpg', 'barberMap.jpg'),
 (3, 'Charlotte Motor Speedway', 'charlotte', 1, 'http://www.charlottemotorspeedway.com/', 'charlotteLogo.jpg', 'charlotteMap.jpg'),
@@ -403,21 +404,21 @@ INSERT INTO `tracks` (`id`, `name`, `shortName`, `isDefaultContent`, `trackWebsi
 -- Indexes for table `cars`
 --
 ALTER TABLE `cars`
-  ADD PRIMARY KEY (`id`),
+  ADD PRIMARY KEY (`car_id`),
   ADD UNIQUE KEY `iRacingId` (`iRacingId`);
 
 --
 -- Indexes for table `configs`
 --
 ALTER TABLE `configs`
-  ADD PRIMARY KEY (`id`),
+  ADD PRIMARY KEY (`config_id`),
   ADD UNIQUE KEY `iracingId` (`iracingId`);
 
 --
 -- Indexes for table `tracks`
 --
 ALTER TABLE `tracks`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`track_id`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
