@@ -1,3 +1,4 @@
+fix mySQL queries
 add series
 add user system
 allow user to add cars and tracks to 'owned' list
