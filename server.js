@@ -219,7 +219,7 @@ app.post('/iracingConfigs', function(req, res) {
     var myQuery = "SELECT * FROM tracks AS t INNER JOIN configs AS c ON t.track_id=c.trackId";
 
     if (search != "") {
-        myQuery += " WHERE c.config_name LIKE '%" + req.body.search + "%'";
+        myQuery += " WHERE c.config_name LIKE '%" + req.body.search + "%' OR t.track_name LIKE '%" + req.body.search + "%'";
     }
 
     if (ovalFilter != 'Any') {
