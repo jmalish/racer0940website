@@ -1,6 +1,7 @@
 !fix mySQL queries
-!add Monza to tracks
-!add new corvette to cars
+!fix mySQL server connection issue (potential fix: http://stackoverflow.com/questions/19357539/node-js-server-closed-the-connection)
+!add missing tracks (monza, 5 flags) - http://www.iracing.com/tracks/
+!add missing cars (new corvette) - http://www.iracing.com/cars/
 !fix title of config page
 add series
 add user system
