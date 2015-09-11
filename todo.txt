@@ -1,4 +1,7 @@
 !fix mySQL queries
+!add Monza to tracks
+!add new corvette to cars
+!fix title of config page
 add series
 add user system
 allow user to add cars and tracks to 'owned' list
