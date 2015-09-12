@@ -6,9 +6,10 @@ var request = require('request');
 var fs = require('fs');
 var mysql = require('mysql');
 var bodyparser = require('body-parser');
-var async = require('async');
 
 // setting view engine to use ejs
+var port = 80; // port server listens on
+
 app.set('view engine', 'ejs');
 
 // general app setup
@@ -21,21 +22,39 @@ app.use(express.static(__dirname + '/public'))
 var data = fs.readFileSync('secrets.json');
 var secrets = JSON.parse(data);
 var mysqlpwd = secrets.passwords.mysql;
-var sqlConnection = mysql.createConnection({
+var sqlConnection;
+var sqlConfig = {
     host: 'localhost',
     user: 'root',
     password: mysqlpwd,
     database: 'iracing'
-});
-sqlConnection.connect(function (err) {
-    if (err) {
-        console.error("Unable to connect to SQL database:\n" + err);
-        return;
-    }
+};
 
-    console.log("Successfully connected to SQL database with thread id " + sqlConnection.threadId);
-});
+function handleDisconnect() { // reconnects to DB if sqlConnection is lost for some reason
+    sqlConnection = mysql.createConnection(sqlConfig);
 
+    sqlConnection.connect(function(err) {
+        if(err) {
+            console.log("Error connecting to mySQL: " + err);
+            setTimeout(handleDisconnect(), 2000);
+        }
+    });
+
+    sqlConnection.on('error', function(err) {
+        console.log('DB error: ', err);
+        if(err.code === 'PROTOCOL_CONNECTION_LOST') {
+            handleDisconnect();
+        } else {
+            throw err;
+        }
+    });
+
+    setTimeout(function() {
+        console.log("Connected to SQL database with thread id " + sqlConnection.threadId);
+    }, 100);
+}
+
+handleDisconnect(); // initial sqlConnection
 ///////////
 // PAGES //
 ///////////
@@ -127,11 +146,13 @@ app.post('/iracingCars', function(req, res) {
     var myQuery = "SELECT * FROM cars";
 
     if ((search != "") || (search == null)) {
+        mysql.escape(search);
         myQuery = "SELECT * FROM cars WHERE car_name LIKE '%" + req.body.search + "%'";
         first = false;
     }
 
     if (isDefault != 'Any') {
+        mysql.escape(isDefault);
         if (!first) {
             myQuery += " AND car_isDefaultContent = " + isDefault;
         } else {
@@ -174,11 +195,13 @@ app.post('/iracingTracks', function(req, res) {
     var myQuery = "SELECT * FROM tracks";
 
     if ((search != "") || (search == null)) {
+        mysql.escape(search);
         myQuery = "SELECT * FROM tracks WHERE track_name LIKE '%" + req.body.search + "%'";
         first = false;
     }
 
     if (isDefault != 'Any') {
+        mysql.escape(isDefault);
         if (!first) {
             myQuery += " AND track_isDefaultContent = " + isDefault;
         } else {
@@ -201,16 +224,17 @@ app.get('/iracingConfigs', function(req, res) {
     sqlConnection.query('SELECT * FROM tracks AS parent INNER JOIN configs ON parent.track_id=configs.trackId', function(err, rows) {
         if (!err) {
             res.render('pages/iracingConfigs', {
-                title: 'iRacing Confgurations :: racer0940.com',
+                title: 'iRacing Track Configurations :: racer0940.com',
                 configs: rows,
-                search: ""
+                search: "",
+                ovalFilter: "Any",
+                nightFilter: "Any"
             });
         } else {
             console.log(err.stack);
         }
     });
 });
-
 
 app.post('/iracingConfigs', function(req, res) {
     var search = req.body.search;
@@ -219,22 +243,27 @@ app.post('/iracingConfigs', function(req, res) {
     var myQuery = "SELECT * FROM tracks AS t INNER JOIN configs AS c ON t.track_id=c.trackId";
 
     if (search != "") {
+        mysql.escape(search);
         myQuery += " WHERE c.config_name LIKE '%" + req.body.search + "%' OR t.track_name LIKE '%" + req.body.search + "%'";
     }
 
     if (ovalFilter != 'Any') {
+        mysql.escape(ovalFilter);
         myQuery += " AND c.isOval = " + ovalFilter;
     }
 
     if (nightFilter != 'Any') {
+        mysql.escape(nightFilter);
         myQuery += " AND c.hasNight = " + nightFilter;
     }
 
     sqlConnection.query(myQuery, function(err, rows) {
         res.render('pages/iracingConfigs', {
-            title: 'iRacing Tracks :: racer0940.com',
+            title: 'iRacing Track Configurations :: racer0940.com',
             configs: rows,
-            search: search
+            search: search,
+            ovalFilter: ovalFilter,
+            nightFilter: nightFilter
         });
     });
 });
@@ -279,12 +308,14 @@ app.post('/randomRace', function (req, res) {
 
 
     if (defaultFilter != "Any") {
+        mysql.escape(defaultFilter);
         myQueryCar += " WHERE cars.car_isDefaultContent = " + defaultFilter;
         myQueryTrack += " WHERE t.track_isDefaultContent = " + defaultFilter;
         first = false;
     }
 
     if (ovalFilter != "Any") {
+        mysql.escape(ovalFilter);
         if (first) {
             myQueryTrack += " WHERE c.isOval = " + ovalFilter;
             first = false;
@@ -294,6 +325,7 @@ app.post('/randomRace', function (req, res) {
     }
 
     if (nightFilter != "Any") {
+        mysql.escape(nightFilter);
         if (first) {
             myQueryTrack += " WHERE c.hasNight = " + nightFilter;
         } else {
@@ -332,5 +364,5 @@ app.get('*', function (req, res) {
 //////////////////
 // Server Stuff //
 //////////////////
-app.listen(80);
-console.log('Server running on port 80');
+app.listen(port);
+console.log('Server running on port ' + port);
