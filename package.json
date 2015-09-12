@@ -11,7 +11,6 @@
     "request": "~2.61.0",
     "events": "~1.0.2",
     "mysql": "~2.9.0",
-    "body-parser": "~1.13.3",
-    "async": "~1.4.2"
+    "body-parser": "~1.13.3"
   }
 }
