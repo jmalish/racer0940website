@@ -1,50 +1,24 @@
 <!-- views/pages/iracingCars.ejs -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="racerApp">
 <head>
     <% include ../partials/head %>
 </head>
 
-<body class="container">
+<body class="container" ng-controller="trackListCtrl">
     <div class="wrapper">
         <header>
             <% include ../partials/header %>
         </header>
+
         <main>
-            <form class="trackForm" method="post" action="iracingTracks">
-                <table>
-                    <tr>
-                        <td><label for="search">Search by name: </label><input type="text" name="search" id="search" value="<%= search %>"/></td>
-                        <td><label for="defaultFilter">Filter by default content:</label>
-                            <select name="defaultFilter" id="defaultFilter">
-                                <option value="Any">Any</option>
-                                <option value="1">Default</option>
-                                <option value="0">Not Default</option>
-                            </select>
-                        </td>
-                        <td><input type="submit"/></td>
-                    </tr>
-                </table>
-            </form>
             <table>
-                    <tr>
-                        <th>Logo</th>
-                        <th>Name</th>
-                        <th>Is Default Content</th>
-                    </tr>
-                        <% tracks.forEach(function(track){ %>
-                            <tr>
-                                <td><a href="<%= track.trackWebsiteURL %>"><img class="trackLogo" src="\images\trackLogos\<%= track.trackLogoURL %>"/></a></td>
-                                <td><%= track.track_name %></td>
-                                <% if (track.track_isDefaultContent == 1) { %>
-                                    <td>Yes</td>
-                                <% } else { %>
-                                    <td>No</td>
-                                <% } %>
-                            </tr>
-                        <% }); %>
-                </table>
+                <ul ng-repeat="track in tracks">
+                    <li>{{ track.track_name }}</li>
+                </ul>
+            </table>
         </main>
+
         <footer>
             <% include ../partials/footer %>
         </footer>

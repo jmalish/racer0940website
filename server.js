@@ -8,12 +8,13 @@ var mysql = require('mysql');
 var bodyparser = require('body-parser');
 
 // setting view engine to use ejs
-var port = 80; // port server listens on
+var port = 81; // port server listens on
 
 app.set('view engine', 'ejs');
 
 // general app setup
 app.use(express.static(__dirname + '/public'))
+    .use('/angular', express.static(__dirname + '/node_modules/angular'))
     .use(bodyparser.urlencoded({ extended: false}))
     .use(bodyparser.json());
 
@@ -353,6 +354,26 @@ app.post('/randomRace', function (req, res) {
         });
     });
 });
+
+
+
+//////////
+// JSON //
+//////////
+
+// track api
+app.get('/api/tracks', function(req, res) {
+    sqlConnection.query('SELECT * FROM tracks', function(err, rows) {
+        if (!err) {
+            var tracks = JSON.stringify(rows);
+
+            res.json(JSON.parse(tracks));
+        }
+    });
+});
+
+
+
 
 // 404 (THIS ALWAYS NEEDS TO BE LAST)
 app.get('*', function (req, res) {
