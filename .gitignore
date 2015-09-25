@@ -4,3 +4,5 @@ secrets.json
 *.jpg
 *.jpeg
 *.bmp
+angular.js
+angular.min.js
