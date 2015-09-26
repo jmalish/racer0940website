@@ -12,10 +12,14 @@
         </header>
 
         <main>
+            <input ng-model="search.track_name">
+            <input type="checkbox" ng-model="defaultOnly" ng-click="defaultCheckChange()">
+            <input ng-model="defaultOnlytest">
             <table>
-                <ul ng-repeat="track in tracks">
-                    <li>{{ track.track_name }}</li>
-                </ul>
+                <tr ng-repeat="track in tracks | filter:search">
+                    <td>{{ track.track_name }}</td>
+                    <td>{{ track.track_isDefaultContent | checkmark }}</td>
+                </tr>
             </table>
         </main>
 
