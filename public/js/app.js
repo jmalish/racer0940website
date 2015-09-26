@@ -7,9 +7,9 @@ racerApp.controller('trackListCtrl', function($scope, $http) {
 
     $scope.defaultCheckChange = function() {
         if ($scope.defaultOnly) {
-            $scope.defaultOnlytest = "0"; // true
+            $scope.search = {"track_isDefaultContent" : 1}; // true
         } else {
-            $scope.defaultOnlytest = "no";
+            $scope.search = {"track_isDefaultContent" : ""}; // false
         }
     };
 });
