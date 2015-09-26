@@ -12,11 +12,18 @@
         </header>
 
         <main>
-            <input ng-model="search.track_name">
-            <input type="checkbox" ng-model="defaultOnly" ng-click="defaultCheckChange()">
-            <table>
+            <div class="trackListFilter">
+                <label for="searchName">Search by name: </label><input id="searchName" ng-model="search.track_name">
+                <label for="searchDefault">Show Default Only:</label> <input id="searchDefault" type="checkbox" ng-model="defaultOnly" ng-click="defaultCheckChange()">
+            </div>
+            <table class="trackList">
+                <tr>
+                    <th>Logo</th>
+                    <th>Name</th>
+                    <th>Is Default Content</th>
+                </tr>
                 <tr ng-repeat="track in tracks | filter:search">
-                    <td><img src="/images/trackLogos/{{ track.track_logoURL }}"</td>
+                    <td><img class="trackLogo" src="/images/trackLogos/{{ track.trackLogoURL }}"/><a href="{{ track.trackWebsiteURL }}">Visit Track Website</a></td>
                     <td>{{ track.track_name }}</td>
                     <td>{{ track.track_isDefaultContent | checkmark }}</td>
                 </tr>

@@ -148,6 +148,10 @@ table, th, tr, td {
     text-align: center;
 }
 
+.trackListFilter {
+    margin: 10px;
+}
+
 table .carImage, table .trackLogo, table .configImage {
     height: 100px;
     width: auto;
