@@ -4,4 +4,8 @@ racerApp.controller('trackListCtrl', function($scope, $http) {
     $http.get('/api/tracks').success(function(data) {
         $scope.tracks = data;
     });
+
+    $scope.defaultOnly = {
+        value1 : '0'
+    }
 });

@@ -140,16 +140,20 @@ table, th, tr, td {
 
 }
 
+.trackLogo {
+    display: inherit;
+}
+
+.trackList {
+    text-align: center;
+}
+
 table .carImage, table .trackLogo, table .configImage {
     height: 100px;
     width: auto;
 }
 
 .carForm table, .carForm th, .carForm tr, .carForm td {
-    border: none;
-}
-
-.trackForm table, .trackForm th, .trackForm tr, .trackForm td {
     border: none;
 }
 
