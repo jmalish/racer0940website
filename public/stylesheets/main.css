@@ -148,17 +148,13 @@ table, th, tr, td {
     text-align: center;
 }
 
-.trackListFilter {
+.filterDiv {
     margin: 10px;
 }
 
 table .carImage, table .trackLogo, table .configImage {
     height: 100px;
     width: auto;
-}
-
-.carForm table, .carForm th, .carForm tr, .carForm td {
-    border: none;
 }
 
 .configForm table, .configForm th, .configForm tr, .configForm td {
