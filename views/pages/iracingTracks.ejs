@@ -25,7 +25,7 @@
                 <tr ng-repeat="track in tracks | filter:search">
                     <td><img class="trackLogo" src="/images/trackLogos/{{ track.trackLogoURL }}"/><a href="{{ track.trackWebsiteURL }}">Visit Track Website</a></td>
                     <td>{{ track.track_name }}</td>
-                    <td>{{ track.track_isDefaultContent | checkmark }}</td>
+                    <td>{{ track.track_isDefaultContent | checkmarkFilter }}</td>
                 </tr>
             </table>
         </main>
