@@ -372,6 +372,17 @@ app.get('/api/tracks', function(req, res) {
     });
 });
 
+// track api
+app.get('/api/cars', function(req, res) {
+    sqlConnection.query('SELECT * FROM cars', function(err, rows) {
+        if (!err) {
+            var tracks = JSON.stringify(rows);
+
+            res.json(JSON.parse(tracks));
+        }
+    });
+});
+
 
 
 

@@ -1,49 +1,31 @@
 <!-- views/pages/iracingCars.ejs -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="racerApp">
 <head>
     <% include ../partials/head %>
 </head>
 
-<body class="container">
+<body class="container" ng-controller="carListCtrl">
     <div class="wrapper">
         <header>
             <% include ../partials/header %>
         </header>
         <main>
-            <form class="carForm" method="post" action="iracingCars">
-                <table>
-                    <tr>
-                        <td><label for="search">Search by name: </label><input type="text" name="search" id="search" value="<%= search %>"/></td>
-                        <td><label for="defaultFilter">Filter by default content:</label>
-                            <select name="defaultFilter" id="defaultFilter">
-                                <option value="Any">Any</option>
-                                <option value="1">Default</option>
-                                <option value="0">Not Default</option>
-                            </select>
-                        </td>
-                        <td><input type="submit"/></td>
-                    </tr>
-                </table>
-            </form>
+            <div class="filterDiv">
+                <label for="searchName">Search by name: </label><input id="searchName" ng-model="search.car_name">
+                <label for="searchDefault">Show Default Only:</label> <input id="searchDefault" type="checkbox" ng-model="defaultOnly" ng-click="defaultCheckChange()">
+            </div>
             <table>
                 <tr>
                     <th>Image</th>
                     <th>Name</th>
                     <th>Default Content</th>
                 </tr>
-                    <% cars.forEach(function(car){ %>
-                        <tr>
-                            <td><img class="carImage" src="\images\carPortraits\<%= car.imageURL %>"/></td>
-                            <td><%= car.car_name %><br/>
-                                <a href="http://members.iracing.com/membersite/member/CarDetail.do?carid=<%= car.iRacingId %>">Car Detail on iRacing.com</a></td>
-                            <% if (car.car_isDefaultContent == 1) { %>
-                                <td>Yes</td>
-                            <% } else { %>
-                                <td>No</td>
-                            <% } %>
-                        </tr>
-                    <% }); %>
+                <tr ng-repeat="car in cars | filter:search">
+                    <td><img class="carImage" src="/images/carPortraits/{{ car.imageURL }}"></td>
+                    <td>{{ car.car_name }}<br/><a href="http://members.iracing.com/membersite/member/CarDetail.do?carid={{ car.iRacingId }}">Car Detail on iRacing.com</a></td>
+                    <td>{{ car.car_isDefaultContent | checkmarkFilter }}</td>
+                </tr>
             </table>
         </main>
         <footer>
