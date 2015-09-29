@@ -14,7 +14,7 @@ app.set('view engine', 'ejs');
 
 // general app setup
 app.use(express.static(__dirname + '/public'))
-    .use('/angular', express.static(__dirname + '/node_modules/angular'))
+    .use('/node', express.static(__dirname + '/node_modules'))
     .use(bodyparser.urlencoded({ extended: false}))
     .use(bodyparser.json());
 
