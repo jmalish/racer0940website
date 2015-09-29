@@ -125,10 +125,10 @@ app.get('/about', function (req, res) {
 });
 
 // cars page
-app.get('/iracingCars', function(req, res) {
+app.get('/cars', function(req, res) {
     sqlConnection.query('SELECT * FROM cars', function(err, rows) {
         if (!err) {
-            res.render('pages/iracingCars', {
+            res.render('pages/cars', {
                 title: 'iRacing Cars :: racer0940.com',
                 cars: rows,
                 search: ""
@@ -139,7 +139,7 @@ app.get('/iracingCars', function(req, res) {
     });
 });
 
-app.post('/iracingCars', function(req, res) {
+app.post('/cars', function(req, res) {
 
     var first = true;
     var search = req.body.search;
@@ -163,7 +163,7 @@ app.post('/iracingCars', function(req, res) {
 
     sqlConnection.query(myQuery, function(err, rows) {
         if (!err) {
-            res.render('pages/iracingCars', {
+            res.render('pages/cars', {
                 title: 'iRacing Cars :: racer0940.com',
                 cars: rows,
                 search: search
@@ -175,10 +175,10 @@ app.post('/iracingCars', function(req, res) {
 });
 
 // tracks page
-app.get('/iracingTracks', function(req, res) {
+app.get('/tracks', function(req, res) {
     sqlConnection.query('SELECT * FROM tracks', function(err, rows) {
         if (!err) {
-            res.render('pages/iracingTracks', {
+            res.render('pages/tracks', {
                 title: 'iRacing Tracks :: racer0940.com',
                 tracks: rows,
                 search: ""
@@ -189,7 +189,7 @@ app.get('/iracingTracks', function(req, res) {
     });
 });
 
-app.post('/iracingTracks', function(req, res) {
+app.post('/tracks', function(req, res) {
     var first = true;
     var search = req.body.search;
     var isDefault = req.body.defaultFilter;
@@ -211,7 +211,7 @@ app.post('/iracingTracks', function(req, res) {
     }
 
     sqlConnection.query(myQuery, function(err, rows) {
-        res.render('pages/iracingTracks', {
+        res.render('pages/tracks', {
             title: 'iRacing Tracks :: racer0940.com',
             tracks: rows,
             search: search
