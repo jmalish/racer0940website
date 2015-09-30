@@ -7,14 +7,12 @@ racerControllers.controller('trackListCtrl', function($scope, $http) {
     $http.get('/api/tracks').success(function(data) {
         $scope.tracks = data;
     });
+});
 
-    $scope.defaultCheckChange = function() {
-        if ($scope.defaultOnly) {
-            $scope.search = {"track_isDefaultContent" : 1}; // true
-        } else {
-            $scope.search = {"track_isDefaultContent" : ""}; // false
-        }
-    };
+racerControllers.controller('trackDetailsCtrl', function($scope, $http, $routeParams) {
+    $http.get('/api/configs/' + $routeParams.trackShortname).success(function(data) {
+        $scope.configs = data;
+    });
 });
 
 // cars

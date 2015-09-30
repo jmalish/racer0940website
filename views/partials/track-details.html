@@ -1,0 +1,21 @@
+<div class="detailImages">
+    <img class="trackLogo" src="images/trackLogos/{{ configs[0].trackLogoURL }}">
+    <img class="trackMap" src="images/trackMaps/{{ configs[0].mapImageURL }}">
+</div>
+
+<h1>Track overview for {{ configs[0].track_name}}</h1>
+<p>{{ configs[0].track_name}} has {{ configs.length }} configurations.</p>
+<p>{{configs[0].hasNight | hasNightFilter }}</p>
+
+<table>
+    <tr>
+        <th>Layout</th>
+        <th>Name</th>
+        <th>Type</th>
+    </tr>
+    <tr ng-repeat="config in configs">
+        <td><img src="images/trackLayouts/{{ config.configLayoutImageURL }}"></td>
+        <td>{{ config.config_name }}</td>
+        <td>{{ config.isOval | ovalRoadFilter }}</td>
+    </tr>
+</table>

@@ -15,6 +15,7 @@ app.set('view engine', 'ejs');
 // general app setup
 app.use(express.static(__dirname + '/public'))
     .use('/node', express.static(__dirname + '/node_modules'))
+    .use('/partials', express.static(__dirname + '/views/partials'))
     .use(bodyparser.urlencoded({ extended: false}))
     .use(bodyparser.json());
 
@@ -383,6 +384,31 @@ app.get('/api/cars', function(req, res) {
     });
 });
 
+// configs api (all)
+app.get('/api/configs', function(req, res) {
+    sqlConnection.query('SELECT * FROM tracks AS parent INNER JOIN configs ON parent.track_id=configs.trackId', function(err, rows) {
+        if (!err) {
+            var configs = JSON.stringify(rows);
+
+            res.json(JSON.parse(configs));
+        }
+    });
+});
+
+// configs api (specific track)
+app.get('/api/configs/:trackShortname', function(req, res) {
+    var trackShortName = mysql.escape(req.params.trackShortname);
+
+    var myQuery = 'SELECT * FROM tracks AS parent INNER JOIN configs ON parent.track_id=configs.trackId WHERE parent.shortName = ' + trackShortName;
+
+    sqlConnection.query(myQuery, function(err, rows) {
+        if (!err) {
+            var configs = JSON.stringify(rows);
+
+            res.json(JSON.parse(configs));
+        }
+    });
+});
 
 
 

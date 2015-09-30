@@ -12,5 +12,6 @@
         <td><img class="trackLogo" src="/images/trackLogos/{{ track.trackLogoURL }}"/><a href="{{ track.trackWebsiteURL }}">Visit Track Website</a></td>
         <td>{{ track.track_name }}</td>
         <td>{{ track.track_isDefaultContent | checkmarkFilter }}</td>
+        <td><a href="#/tracks/{{track.shortName}}">View configurations</a></td>
     </tr>
 </table>
