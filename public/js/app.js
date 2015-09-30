@@ -7,11 +7,11 @@ var racerApp = angular.module('racerApp', [
 racerApp.config(['$routeProvider',
     function($routeProvider) {
         $routeProvider.
-            when('/tracks', {
+            when('/', {
                 templateUrl: 'partials/track-list.html',
                 controller: 'trackListCtrl'
             }).
-            when('/tracks/:trackShortname', {
+            when('/:trackShortname', {
                 templateUrl: 'partials/track-details.html',
                 controller: 'trackDetailsCtrl'
             }).
