@@ -11,6 +11,8 @@
     "request": "~2.61.0",
     "events": "~1.0.2",
     "mysql": "~2.9.0",
-    "body-parser": "~1.13.3"
+    "body-parser": "~1.13.3",
+    "angular": "1.4.*",
+    "angular-route": "1.4.*"
   }
 }

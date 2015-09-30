@@ -8,12 +8,14 @@ var mysql = require('mysql');
 var bodyparser = require('body-parser');
 
 // setting view engine to use ejs
-var port = 80; // port server listens on
+var port = 81; // port server listens on
 
 app.set('view engine', 'ejs');
 
 // general app setup
 app.use(express.static(__dirname + '/public'))
+    .use('/node', express.static(__dirname + '/node_modules'))
+    .use('/partials', express.static(__dirname + '/views/partials'))
     .use(bodyparser.urlencoded({ extended: false}))
     .use(bodyparser.json());
 
@@ -124,10 +126,10 @@ app.get('/about', function (req, res) {
 });
 
 // cars page
-app.get('/iracingCars', function(req, res) {
+app.get('/cars', function(req, res) {
     sqlConnection.query('SELECT * FROM cars', function(err, rows) {
         if (!err) {
-            res.render('pages/iracingCars', {
+            res.render('pages/cars', {
                 title: 'iRacing Cars :: racer0940.com',
                 cars: rows,
                 search: ""
@@ -138,7 +140,7 @@ app.get('/iracingCars', function(req, res) {
     });
 });
 
-app.post('/iracingCars', function(req, res) {
+app.post('/cars', function(req, res) {
 
     var first = true;
     var search = req.body.search;
@@ -162,7 +164,7 @@ app.post('/iracingCars', function(req, res) {
 
     sqlConnection.query(myQuery, function(err, rows) {
         if (!err) {
-            res.render('pages/iracingCars', {
+            res.render('pages/cars', {
                 title: 'iRacing Cars :: racer0940.com',
                 cars: rows,
                 search: search
@@ -174,10 +176,10 @@ app.post('/iracingCars', function(req, res) {
 });
 
 // tracks page
-app.get('/iracingTracks', function(req, res) {
+app.get('/tracks', function(req, res) {
     sqlConnection.query('SELECT * FROM tracks', function(err, rows) {
         if (!err) {
-            res.render('pages/iracingTracks', {
+            res.render('pages/tracks', {
                 title: 'iRacing Tracks :: racer0940.com',
                 tracks: rows,
                 search: ""
@@ -188,7 +190,7 @@ app.get('/iracingTracks', function(req, res) {
     });
 });
 
-app.post('/iracingTracks', function(req, res) {
+app.post('/tracks', function(req, res) {
     var first = true;
     var search = req.body.search;
     var isDefault = req.body.defaultFilter;
@@ -210,7 +212,7 @@ app.post('/iracingTracks', function(req, res) {
     }
 
     sqlConnection.query(myQuery, function(err, rows) {
-        res.render('pages/iracingTracks', {
+        res.render('pages/tracks', {
             title: 'iRacing Tracks :: racer0940.com',
             tracks: rows,
             search: search
@@ -353,6 +355,62 @@ app.post('/randomRace', function (req, res) {
         });
     });
 });
+
+
+
+//////////
+// JSON //
+//////////
+
+// track api
+app.get('/api/tracks', function(req, res) {
+    sqlConnection.query('SELECT * FROM tracks', function(err, rows) {
+        if (!err) {
+            var tracks = JSON.stringify(rows);
+
+            res.json(JSON.parse(tracks));
+        }
+    });
+});
+
+// track api
+app.get('/api/cars', function(req, res) {
+    sqlConnection.query('SELECT * FROM cars', function(err, rows) {
+        if (!err) {
+            var tracks = JSON.stringify(rows);
+
+            res.json(JSON.parse(tracks));
+        }
+    });
+});
+
+// configs api (all)
+app.get('/api/configs', function(req, res) {
+    sqlConnection.query('SELECT * FROM tracks AS parent INNER JOIN configs ON parent.track_id=configs.trackId', function(err, rows) {
+        if (!err) {
+            var configs = JSON.stringify(rows);
+
+            res.json(JSON.parse(configs));
+        }
+    });
+});
+
+// configs api (specific track)
+app.get('/api/configs/:trackShortname', function(req, res) {
+    var trackShortName = mysql.escape(req.params.trackShortname);
+
+    var myQuery = 'SELECT * FROM tracks AS parent INNER JOIN configs ON parent.track_id=configs.trackId WHERE parent.shortName = ' + trackShortName;
+
+    sqlConnection.query(myQuery, function(err, rows) {
+        if (!err) {
+            var configs = JSON.stringify(rows);
+
+            res.json(JSON.parse(configs));
+        }
+    });
+});
+
+
 
 // 404 (THIS ALWAYS NEEDS TO BE LAST)
 app.get('*', function (req, res) {

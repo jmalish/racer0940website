@@ -140,17 +140,21 @@ table, th, tr, td {
 
 }
 
+.trackLogo {
+    display: inherit;
+}
+
+.trackList {
+    text-align: center;
+}
+
+.filterDiv {
+    margin: 10px;
+}
+
 table .carImage, table .trackLogo, table .configImage {
     height: 100px;
     width: auto;
-}
-
-.carForm table, .carForm th, .carForm tr, .carForm td {
-    border: none;
-}
-
-.trackForm table, .trackForm th, .trackForm tr, .trackForm td {
-    border: none;
 }
 
 .configForm table, .configForm th, .configForm tr, .configForm td {
@@ -206,4 +210,13 @@ a {
 
 .randomRaceForm {
     text-align: left;;
+}
+
+.detailImages img {
+    display: inline;
+}
+
+.trackLogo, .trackMap {
+    height: 150px;
+    width: auto;
 }
