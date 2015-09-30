@@ -1,0 +1,16 @@
+<div class="filterDiv">
+    <label for="searchName">Search by name: </label><input id="searchName" ng-model="search.track_name">
+    <label for="searchDefault">Show Default Only:</label> <input id="searchDefault" type="checkbox" ng-model="search.track_isDefaultContent" ng-true-value="1" ng-false-value="">
+</div>
+<table class="trackList">
+    <tr>
+        <th>Logo</th>
+        <th>Name</th>
+        <th>Is Default Content</th>
+    </tr>
+    <tr ng-repeat="track in tracks | filter:search">
+        <td><img class="trackLogo" src="/images/trackLogos/{{ track.trackLogoURL }}"/><a href="{{ track.trackWebsiteURL }}">Visit Track Website</a></td>
+        <td>{{ track.track_name }}</td>
+        <td>{{ track.track_isDefaultContent | checkmarkFilter }}</td>
+    </tr>
+</table>
