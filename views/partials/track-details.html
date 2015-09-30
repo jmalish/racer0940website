@@ -1,21 +1,31 @@
-<div class="detailImages">
-    <img class="trackLogo" src="images/trackLogos/{{ configs[0].trackLogoURL }}">
-    <img class="trackMap" src="images/trackMaps/{{ configs[0].mapImageURL }}">
+<div class="trackDetails">
+    <h1>Track overview for {{ configs[0].track_name}}</h1>
+    <div class="detailImages">
+        <img class="trackLogo" src="images/trackLogos/{{ configs[0].trackLogoURL }}">
+        <img class="trackMap" src="images/trackMaps/{{ configs[0].mapImageURL }}">
+    </div>
+
+    <p>{{ configs[0].track_name}} has {{ configs.length }} configurations. {{ configs[0].hasNight | hasNightFilter }} {{ configs[0].track_isDefaultContent | defaultContentFilter }}</p>
+
+    <table>
+        <div class="filterDiv">
+            <label for="searchName">Search by name: </label><input id="searchName" ng-model="search.config_name">
+            <label for="searchType">Filter by type:</label>
+            <select id="searchType" ng-model="search.isOval">
+                <option value="">Any</option>
+                <option value="1">Oval Only</option>
+                <option value="0">Road Only</option>
+            </select>
+        </div>
+        <tr>
+            <th>Layout</th>
+            <th>Name</th>
+            <th>Type</th>
+        </tr>
+        <tr ng-repeat="config in configs | filter:search">
+            <td><img src="images/trackLayouts/{{ config.configLayoutImageURL }}"></td>
+            <td>{{ config.config_name }}</td>
+            <td>{{ config.isOval | ovalRoadFilter }}</td>
+        </tr>
+    </table>
 </div>
-
-<h1>Track overview for {{ configs[0].track_name}}</h1>
-<p>{{ configs[0].track_name}} has {{ configs.length }} configurations.</p>
-<p>{{configs[0].hasNight | hasNightFilter }}</p>
-
-<table>
-    <tr>
-        <th>Layout</th>
-        <th>Name</th>
-        <th>Type</th>
-    </tr>
-    <tr ng-repeat="config in configs">
-        <td><img src="images/trackLayouts/{{ config.configLayoutImageURL }}"></td>
-        <td>{{ config.config_name }}</td>
-        <td>{{ config.isOval | ovalRoadFilter }}</td>
-    </tr>
-</table>

@@ -11,6 +11,11 @@ angular.module('racerFilters', []).
     }).
     filter('hasNightFilter', function() {
         return function(input) {
-            return input ? 'It does offer night racing.' : 'It does not offer night racing.';
+            return input ? 'It has night racing.' : 'It does not have night racing.';
+        };
+    }).
+    filter('defaultContentFilter', function() {
+        return function(input) {
+            return input ? 'It is default content.' : 'It is not default content.';
         };
     });

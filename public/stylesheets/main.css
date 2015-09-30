@@ -211,3 +211,12 @@ a {
 .randomRaceForm {
     text-align: left;;
 }
+
+.detailImages img {
+    display: inline;
+}
+
+.trackLogo, .trackMap {
+    height: 150px;
+    width: auto;
+}
