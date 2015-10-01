@@ -209,7 +209,7 @@ a {
 }
 
 .randomRaceForm {
-    text-align: left;;
+    text-align: center !important;
 }
 
 .detailImages img {

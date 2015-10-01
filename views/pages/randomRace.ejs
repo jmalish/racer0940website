@@ -1,12 +1,11 @@
 <!-- views/pages/about.ejs -->
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="racerApp">
 <head>
     <% include ../partials/head %>
 </head>
 
-<body class="container">
+<body class="container" ng-controller="randomRaceCtrl">
 <div class="wrapper">
     <header>
         <% include ../partials/header %>
@@ -14,69 +13,19 @@
     <main>
         <table class="randomRace">
             <tr>
-                <td colspan="2">
-                    <form class="randomRaceForm" method="post" action="randomRace">
-                    <label for="defaultFilter">Filter by default content:</label>
-                        <select name="defaultFilter" id="defaultFilter">
-                            <% if (defaultFilterPost == "Any") { %>
-                                <option value="Any">Any</option>
-                                <option value="1">Default</option>
-                                <option value="0">Not Default</option>
-                            <% } else if (defaultFilterPost == 1) { %>
-                                <option value="Any">Any</option>
-                                <option value="1" selected>Default</option>
-                                <option value="0">Not Default</option>
-                            <% } else { %>
-                                <option value="Any">Any</option>
-                                <option value="1">Default</option>
-                                <option value="0" selected>Not Default</option>
-                            <% } %>
-                        </select>
-                    <label for="ovalFilter">Filter by oval/road tracks:</label>
-                        <select name="ovalFilter" id="ovalFilter">
-                            <% if (ovalFilter == "Any") { %>
-                                <option value="Any">Any</option>
-                                <option value="1">Oval Only</option>
-                                <option value="0">Road Only</option>
-                            <% } else if (ovalFilter == 1) { %>
-                                <option value="Any">Any</option>
-                                <option value="1" selected>Oval Only</option>
-                                <option value="0">Road Only</option>
-                            <% } else { %>
-                                <option value="Any">Any</option>
-                                <option value="1">Oval Only</option>
-                                <option value="0" selected>Road Only</option>
-                            <% } %>
-                        </select>
-                    <label for="nightFilter">Filter by night racing availability:</label>
-                        <select name="nightFilter" id="nightFilter">
-                            <% if (nightFilter == "Any") { %>
-                                <option value="Any">Any</option>
-                                <option value="1">Has Night</option>
-                                <option value="0">Does not have night</option>
-                            <% } else if (nightFilter == 1) { %>
-                                <option value="Any">Any</option>
-                                <option value="1" selected>Has Night</option>
-                                <option value="0">Does not have night</option>
-                            <% } else { %>
-                                <option value="Any">Any</option>
-                                <option value="1">Has Night</option>
-                                <option value="0" selected>Does not have night</option>
-                            <% } %>
-                        </select>
-                    <input type="submit"/>
-                    </form>
+                <td colspan="2" class="randomRaceForm">
+                    <button ng-click="reloadPage()">New race</button> <!-- TODO: make filter form for random race page -->
                 </td>
             </tr>
             <tr>
-                <td class="carDetails"><h2><%= car.car_name %> @ </h2></td>
-                <td class="trackDetails"><h2><%= track.track_name %> - <%= track.config_name %></h2></td>
+                <td class="carDetails"><h2>{{ cars[randCar].car_name }} @ </h2></td>
+                <td class="trackDetails"><h2>{{ tracks[randTrack].track_name }} - {{ tracks[randTrack].config_name }}</h2></td>
             </tr>
             <tr>
-                <td><img src="images/carPortraits/<%= car.imageURL %>"/></td>
+                <td><img src="images/carPortraits/{{ cars[randCar].imageURL }}"/></td>
                 <td>
-                    <img class="configImage" src="images/trackLayouts/<%= track.configLayoutImageURL %>">
-                    <img class="trackLogo" src="images/trackLogos/<%= track.trackLogoURL %>">
+                    <img class="configImage" src="images/trackLayouts/{{ tracks[randTrack].configLayoutImageURL }}">
+                    <img class="trackLogo" src="images/trackLogos/{{ tracks[randTrack].trackLogoURL }}">
                 </td>
             </tr>
         </table>
