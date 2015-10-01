@@ -19,7 +19,7 @@ app.use(express.static(__dirname + '/public'))
     .use(bodyparser.urlencoded({ extended: false}))
     .use(bodyparser.json());
 
-
+// <editor-fold desc="MySQL setup">
 // setting up mysql
 var data = fs.readFileSync('secrets.json');
 var secrets = JSON.parse(data);
@@ -57,9 +57,12 @@ function handleDisconnect() { // reconnects to DB if sqlConnection is lost for s
 }
 
 handleDisconnect(); // initial sqlConnection
+// </editor-fold>
+
 ///////////
 // PAGES //
 ///////////
+// <editor-fold desc="Pages">
 // index page
 app.get('/', function(req, res) {
     // get json from twitch
@@ -118,12 +121,6 @@ app.get('/', function(req, res) {
     });
 });
 
-// about page
-app.get('/about', function (req, res) {
-    res.render('pages/about', {
-        title:'racer0940.com :: About'
-    });
-});
 
 // cars page
 app.get('/cars', function(req, res) {
@@ -140,41 +137,6 @@ app.get('/cars', function(req, res) {
     });
 });
 
-app.post('/cars', function(req, res) {
-
-    var first = true;
-    var search = req.body.search;
-    var isDefault = req.body.defaultFilter;
-    var myQuery = "SELECT * FROM cars";
-
-    if ((search != "") || (search == null)) {
-        mysql.escape(search);
-        myQuery = "SELECT * FROM cars WHERE car_name LIKE '%" + req.body.search + "%'";
-        first = false;
-    }
-
-    if (isDefault != 'Any') {
-        mysql.escape(isDefault);
-        if (!first) {
-            myQuery += " AND car_isDefaultContent = " + isDefault;
-        } else {
-            myQuery = "SELECT * FROM cars WHERE car_isDefaultContent = " + isDefault;
-        }
-    }
-
-    sqlConnection.query(myQuery, function(err, rows) {
-        if (!err) {
-            res.render('pages/cars', {
-                title: 'iRacing Cars :: racer0940.com',
-                cars: rows,
-                search: search
-            });
-        } else {
-            console.error(err.stack);
-        }
-    });
-});
-
 // tracks page
 app.get('/tracks', function(req, res) {
     sqlConnection.query('SELECT * FROM tracks', function(err, rows) {
@@ -187,36 +149,6 @@ app.get('/tracks', function(req, res) {
         } else {
             console.log(err.stack);
         }
-    });
-});
-
-app.post('/tracks', function(req, res) {
-    var first = true;
-    var search = req.body.search;
-    var isDefault = req.body.defaultFilter;
-    var myQuery = "SELECT * FROM tracks";
-
-    if ((search != "") || (search == null)) {
-        mysql.escape(search);
-        myQuery = "SELECT * FROM tracks WHERE track_name LIKE '%" + req.body.search + "%'";
-        first = false;
-    }
-
-    if (isDefault != 'Any') {
-        mysql.escape(isDefault);
-        if (!first) {
-            myQuery += " AND track_isDefaultContent = " + isDefault;
-        } else {
-            myQuery = "SELECT * FROM tracks WHERE track_isDefaultContent = " + isDefault;
-        }
-    }
-
-    sqlConnection.query(myQuery, function(err, rows) {
-        res.render('pages/tracks', {
-            title: 'iRacing Tracks :: racer0940.com',
-            tracks: rows,
-            search: search
-        });
     });
 });
 
@@ -355,13 +287,14 @@ app.post('/randomRace', function (req, res) {
         });
     });
 });
+// </editor-fold>
 
 
 
 //////////
 // JSON //
 //////////
-
+// <editor-fold desc="JSON/API">
 // track api
 app.get('/api/tracks', function(req, res) {
     sqlConnection.query('SELECT * FROM tracks', function(err, rows) {
@@ -409,8 +342,7 @@ app.get('/api/configs/:trackShortname', function(req, res) {
         }
     });
 });
-
-
+// </editor-fold>
 
 // 404 (THIS ALWAYS NEEDS TO BE LAST)
 app.get('*', function (req, res) {
