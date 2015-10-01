@@ -15,6 +15,13 @@ racerControllers.controller('trackDetailsCtrl', function($scope, $http, $routePa
     });
 });
 
+// configs page
+racerControllers.controller('configListCtrl', function($scope, $http) {
+    $http.get('/api/configs').success(function(data) {
+        $scope.configs = data;
+    });
+});
+
 // cars
 racerControllers.controller('carListCtrl', function($scope, $http) {
     $http.get('/api/cars').success(function(data) {
