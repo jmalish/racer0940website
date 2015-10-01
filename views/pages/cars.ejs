@@ -13,7 +13,7 @@
         <main>
             <div class="filterDiv">
                 <label for="searchName">Search by name: </label><input id="searchName" ng-model="search.car_name">
-                <label for="searchDefault">Show Default Only:</label> <input id="searchDefault" type="checkbox" ng-model="defaultOnly" ng-click="defaultCheckChange()">
+                <label for="searchDefault">Show Default Only:</label> <input id="searchDefault" type="checkbox" ng-model="search.car_isDefaultContent" ng-true-value="1" ng-false-value="">
             </div>
             <table>
                 <tr>
