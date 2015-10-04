@@ -1,48 +1,29 @@
-<!-- index.ejs -->
-
+<!-- views/pages/index.html -->
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <% include ../partials/head.ejs %>
-    </head>
-    <body>
-        <div class="wrapper">
-            <header>
-                <% include ../partials/header.ejs %>
-            </header>
+<html lang="en" ng-app="racerApp">
 
-            <main>
-                <div class="videoBox">
-                    <% if (isLive) { %>
-                        <!-- stream is live, show twitch stuff -->
-                        <div class="twitchInfo">
-                            <h2 class="twitchTitle"><%= twitchTitle %></h2>
-                            <p class="twitchGame">playing <b><%= twitchGame %></b></p>
-                        </div>
-                        <div class="player"><iframe src="http://www.twitch.tv/racer0940/embed" frameborder="0" scrolling="no" height="378" width="620"></iframe></div>
-                        <div class="chat"><iframe src="http://www.twitch.tv/racer0940/chat?popout=" frameborder="0" scrolling="no" height="500" width="350"></iframe></div>
-                    <% } else { %>
-                        <!-- stream is offline, show youtube stuff -->
-                        <p>Bummer! Looks like racer's not streaming at the moment. In the meantime, check out some of his videos on youtube.<br>
-                            You can also <a href="www.twitch.tv/racer0940">follow racer on twitch</a> to get notified when he goes live. </p>
-                        <div class="latestVideo">
-                            <h3>Latest video:</h3>
-                            <iframe width="560" height="315" src="<%= latestVid %>" frameborder="0" allowfullscreen></iframe>
-                            <p><%= latestVidDesc %></p>
-                        </div>
-                        <div class="randomVideo">
-                            <h3>Random video:</h3>
-                            <iframe width="560" height="315" src="<%= randVid %>" frameborder="0" allowfullscreen></iframe>
-                            <p><%= randVidDesc %></p>
-                        </div>
-                        <p>For more videos, be sure to <a href="https://www.youtube.com/subscription_center?add_user=racer0940tv">subscribe to racer on youtube</a>.</p>
-                    <% } %>
-                </div>
-            </main>
+<head>
+    <meta charset="UTF-8" />
+    <title>Racer0940</title>
 
-            <footer>
-                <% include ../partials/footer.ejs %>
-            </footer>
-        </div>
-    </body>
+    <link rel="stylesheet" href="/stylesheets/main.css">
+    <link rel="icon" href="/images/favicon.ico">
+    <script src="/node/angular/angular.min.js"></script>
+    <script src="/node/angular-route/angular-route.min.js"></script>
+    <script src="/js/filters.js"></script>
+    <script src="/js/controllers.js"></script>
+    <script src="/js/app.js"></script>
+</head>
+
+<body class="container">
+    <div class="wrapper">
+        <header ng-include="'partials/header.html'"></header>
+
+        <main>
+            <div ng-view></div>
+        </main>
+
+        <footer ng-include="'partials/footer.html'"></footer>
+    </div>
+</body>
 </html>
