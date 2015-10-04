@@ -12,7 +12,7 @@
     <tr ng-repeat="config in configs | filter:search ">
         <td><img src="images/trackLayouts/{{ config.configLayoutImageURL }}"></td>
         <td>{{ config.config_name }}</td>
-        <td><a href="#/{{ config.shortName }}">{{ config.track_name }}</a></td>
+        <td><a href="#tracks/{{ config.shortName }}">{{ config.track_name }}</a></td>
         <td>{{ config.isOval | ovalRoadFilter }}</td>
     </tr>
 </table>
