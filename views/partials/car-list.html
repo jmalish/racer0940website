@@ -10,7 +10,7 @@
     </tr>
     <tr ng-repeat="car in cars | filter:search">
         <td><img class="carImage" src="/images/carPortraits/{{ car.imageURL }}"></td>
-        <td>{{ car.car_name }}<br/><a href="http://members.iracing.com/membersite/member/CarDetail.do?carid={{ car.iRacingId }}">Car Detail on iRacing.com</a></td>
-        <td>{{ car.car_isDefaultContent | checkmarkFilter }}</td>
+        <td>{{ car.name }}<br/><a href="http://members.iracing.com/membersite/member/CarDetail.do?carid={{ car.iRacingId }}">Car Detail on iRacing.com</a></td>
+        <td>{{ car.isDefaultContent | checkmarkFilter }}</td>
     </tr>
 </table>
