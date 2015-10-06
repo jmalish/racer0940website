@@ -96,7 +96,9 @@ app.get('/api/cars', function(req, res) {
 
 // configs api (all)
 app.get('/api/configs', function(req, res) {
-    sqlConnection.query('SELECT * FROM tracks AS parent INNER JOIN configs ON parent.track_id=configs.trackId', function(err, rows) {
+    var myQuery = "SELECT tracks.name as parentName, tracks.shortName as parentShortName, configs.iRacingId, configs.name, configs.layoutImageURL FROM tracks INNER JOIN configs ON tracks.id=configs.trackId;";
+
+    sqlConnection.query(myQuery, function(err, rows) {
         if (!err) {
             var configs = JSON.stringify(rows);
 
@@ -109,7 +111,8 @@ app.get('/api/configs', function(req, res) {
 app.get('/api/configs/:trackShortname', function(req, res) {
     var trackShortName = mysql.escape(req.params.trackShortname);
 
-    var myQuery = 'SELECT * FROM tracks AS parent INNER JOIN configs ON parent.track_id=configs.trackId WHERE parent.shortName = ' + trackShortName;
+    var myQuery = 'SELECT tracks.name as parentName, tracks.logoURL as parentLogoImgUrl, tracks.mapImageURL as parentMapImgUrl, tracks.isDefaultContent as parentIsDefaultContent, configs.hasNight, configs.name, configs.isOval, configs.layoutImageURL FROM tracks INNER JOIN configs ON tracks.id=configs.trackId WHERE tracks.shortName = '
+        + trackShortName;
 
     sqlConnection.query(myQuery, function(err, rows) {
         if (!err) {

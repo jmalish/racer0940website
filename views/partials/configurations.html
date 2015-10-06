@@ -1,7 +1,7 @@
 <table>
     <tr>
         <th>Layout</th>
-        <th>Name<br><input ng-model="search.config_name"></th>
+        <th>Name<br><input ng-model="search.name"></th>
         <th>Parent Track<br><input ng-model="search.track_name"></th>
         <th>Type<br><select ng-model="search.isOval">
             <option value="">Any</option>
@@ -10,9 +10,9 @@
         </select></th>
     </tr>
     <tr ng-repeat="config in configs | filter:search ">
-        <td><img src="images/trackLayouts/{{ config.configLayoutImageURL }}"></td>
-        <td>{{ config.config_name }}</td>
-        <td><a href="#tracks/{{ config.shortName }}">{{ config.track_name }}</a></td>
+        <td><img src="images/trackLayouts/{{ config.layoutImageURL }}"></td>
+        <td>{{ config.name }}</td>
+        <td><a href="#tracks/{{ config.parentShortName }}">{{ config.parentName }}</a></td>
         <td>{{ config.isOval | ovalRoadFilter }}</td>
     </tr>
 </table>

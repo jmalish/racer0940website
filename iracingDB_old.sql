@@ -23,15 +23,15 @@ DROP TABLE IF EXISTS `cars`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `cars` (
-  `id` int(11) NOT NULL DEFAULT '0',
-  `name` text,
+  `car_id` int(11) NOT NULL,
+  `car_name` text NOT NULL,
   `shortName` text NOT NULL,
   `displayName` text NOT NULL,
   `folderName` text NOT NULL,
-  `isDefaultContent` tinyint(1) DEFAULT NULL,
+  `car_isDefaultContent` tinyint(1) NOT NULL,
   `iRacingId` int(11) NOT NULL,
   `imageURL` text NOT NULL,
-  PRIMARY KEY (`id`),
+  PRIMARY KEY (`car_id`),
   UNIQUE KEY `iRacingId` (`iRacingId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -80,15 +80,15 @@ DROP TABLE IF EXISTS `configs`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `configs` (
-  `id` int(11) NOT NULL DEFAULT '0',
+  `config_id` int(11) NOT NULL,
   `iracingId` int(11) NOT NULL,
   `trackId` int(11) NOT NULL,
-  `name` text,
+  `config_name` text NOT NULL,
   `isOval` tinyint(1) NOT NULL,
   `hasNight` tinyint(1) NOT NULL,
   `pitstallCount` int(11) NOT NULL,
-  `layoutImageURL` text,
-  PRIMARY KEY (`id`),
+  `configLayoutImageURL` text NOT NULL,
+  PRIMARY KEY (`config_id`),
   UNIQUE KEY `iracingId` (`iracingId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -142,10 +142,10 @@ DROP TABLE IF EXISTS `licenses`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `licenses` (
-  `id` int(11) NOT NULL DEFAULT '0',
-  `name` text,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `licenseId_UNIQUE` (`id`)
+  `licenseId` int(11) NOT NULL,
+  `licenseName` tinytext NOT NULL,
+  PRIMARY KEY (`licenseId`),
+  UNIQUE KEY `licenseId_UNIQUE` (`licenseId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -167,7 +167,7 @@ DROP TABLE IF EXISTS `series`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `series` (
-  `id` int(11) NOT NULL DEFAULT '0',
+  `seasonId` int(11) NOT NULL,
   `name` text,
   `shortName` text,
   `cautionType` int(11) DEFAULT NULL,
@@ -176,8 +176,8 @@ CREATE TABLE `series` (
   `maxLicenseId` int(11) DEFAULT NULL,
   `bannerImgUrl` text,
   `logoImgUrl` text,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `seasonId_UNIQUE` (`id`)
+  PRIMARY KEY (`seasonId`),
+  UNIQUE KEY `seasonId_UNIQUE` (`seasonId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -199,14 +199,14 @@ DROP TABLE IF EXISTS `tracks`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tracks` (
-  `id` int(11) NOT NULL DEFAULT '0',
-  `name` text,
+  `track_id` int(11) NOT NULL,
+  `track_name` text NOT NULL,
   `shortName` text NOT NULL,
-  `isDefaultContent` tinyint(1) DEFAULT NULL,
-  `websiteUrl` text,
-  `logoURL` text,
+  `track_isDefaultContent` tinyint(1) NOT NULL,
+  `trackWebsiteURL` text NOT NULL,
+  `trackLogoURL` text NOT NULL,
   `mapImageURL` text NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`track_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -229,4 +229,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-10-05 21:50:22
+-- Dump completed on 2015-10-04 21:22:17
