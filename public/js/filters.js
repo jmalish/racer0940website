@@ -18,4 +18,15 @@ angular.module('racerFilters', []).
         return function(input) {
             return input ? 'It is default content.' : 'It is not default content.';
         };
+    }).
+    filter('cautionTypeFilter', function() {
+        return function(cautionType) {
+            if (cautionType == 0) {
+                return "No Cautions";
+            } else if (cautionType == 1) {
+                return "Local Cautions Only";
+            } else if (cautionType == 2) {
+                return "Full Course Cautions";
+            }
+        }
     });

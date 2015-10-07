@@ -122,6 +122,17 @@ app.get('/api/configs/:trackShortname', function(req, res) {
         }
     });
 });
+
+// series api
+app.get('/api/series', function(req, res) {
+    var myQuery = "select series.*, series.isFixed, series.isTeam, lic1.name as minLicense, lic2.name as maxLicense FROM series left join licenses lic1 on lic1.id = series.minLicenseId left join licenses lic2 on lic2.id = series.maxLicenseId;";
+
+    sqlConnection.query(myQuery, function(err, data) {
+        var series = JSON.stringify(data);
+
+        res.json(JSON.parse(series));
+    });
+});
 // </editor-fold>
 
 // 404 (THIS ALWAYS NEEDS TO BE LAST)

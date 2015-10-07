@@ -220,3 +220,17 @@ a {
     height: 150px;
     width: auto;
 }
+
+.seriesList td {
+    max-width: 200px;
+}
+
+.seriesList td:first-child {
+    width: 265px;
+}
+
+.seasonLogo {
+    height: 100px;
+    width: auto;
+    margin: 0;
+}

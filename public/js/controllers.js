@@ -64,3 +64,23 @@ racerControllers.controller('randomRaceCtrl', function($scope, $http, $rootScope
 
     $scope.reloadPage();
 });
+
+// series
+racerControllers.controller('seriesCtrl', function($scope, $http, $rootScope) {
+    $http.get('/api/series').success(function(data) {
+        $scope.series = data;
+
+        $scope.minLicenseChange = function() {
+            var minLicenseSelected = $scope.minLicense;
+
+            $scope.series = data;
+        };
+
+        $scope.maxLicenseChange = function() {
+            $scope.search = { 'maxLicenseId' : maxLicenseSelected};
+        };
+    });
+
+
+    $rootScope.pageTitle = "Series :: racer0940.com";
+});
