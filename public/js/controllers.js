@@ -1,7 +1,6 @@
 // controller.js
 var racerControllers = angular.module('racerControllers', []);
 
-
 // tracks
 racerControllers.controller('trackListCtrl', function($scope, $http, $rootScope) {
     $http.get('/api/tracks').success(function(data) {
@@ -62,25 +61,16 @@ racerControllers.controller('randomRaceCtrl', function($scope, $http, $rootScope
 
     $rootScope.pageTitle = "Random Race Generator :: racer0940.com";
 
-    $scope.reloadPage();
+    reloadPage();
 });
 
 // series
 racerControllers.controller('seriesCtrl', function($scope, $http, $rootScope) {
     $http.get('/api/series').success(function(data) {
         $scope.series = data;
-
-        $scope.minLicenseChange = function() {
-            var minLicenseSelected = $scope.minLicense;
-
-            $scope.series = data;
-        };
-
-        $scope.maxLicenseChange = function() {
-            $scope.search = { 'maxLicenseId' : maxLicenseSelected};
-        };
     });
 
+    $scope.minLicense = "";
 
     $rootScope.pageTitle = "Series :: racer0940.com";
 });

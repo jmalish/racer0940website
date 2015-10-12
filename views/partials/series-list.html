@@ -25,18 +25,15 @@
         <th>Cautions*</th>
         <th>
             <label for="minLicense">Minimum License</label><br>
-            <select id="minLicense" ng-model="minLicense" ng-change="tester()">
-                <option value="">Any</option><option value="0">R1</option><option value=">1">R2</option><option value="2">R3</option><option value="3">R4</option><option value="4">D1</option><option value="5">D2</option><option value="6">D3</option><option value="7">D4</option><option value="8">C1</option><option value="9">C2</option><option value="10">C3</option><option value="11">C4</option><option value="12">B1</option><option value="13">B2</option><option value="14">B3</option><option value="15">B4</option><option value="16">A1</option><option value="17">A2</option><option value="18">A3</option><option value="19">A4</option><option value="20">P1</option><option value="21">P2</option><option value="22">P3</option><option value="23">P4</option>
-            </select>
-        </th>
-        <th>
-            <label for="maxLicense">Max License</label><br>
-            <select id="maxLicense" ng-model="maxLicense" ng-change="maxLicenseChange()">
+            <select id="minLicense" ng-model="minLicense">
                 <option value="">Any</option><option value="0">R1</option><option value="1">R2</option><option value="2">R3</option><option value="3">R4</option><option value="4">D1</option><option value="5">D2</option><option value="6">D3</option><option value="7">D4</option><option value="8">C1</option><option value="9">C2</option><option value="10">C3</option><option value="11">C4</option><option value="12">B1</option><option value="13">B2</option><option value="14">B3</option><option value="15">B4</option><option value="16">A1</option><option value="17">A2</option><option value="18">A3</option><option value="19">A4</option><option value="20">P1</option><option value="21">P2</option><option value="22">P3</option><option value="23">P4</option>
             </select>
         </th>
+        <th>
+            Max License
+        </th>
     </tr>
-    <tr ng-repeat="s in series | filter:search | orderBy:'minLicenseId'">
+    <tr ng-repeat="s in series | filter:search | orderBy:'minLicenseId'" ng-if="s.minLicenseId >= minLicense">
         <td><img class="seasonLogo" src="images/seasonLogos/{{ s.logoImgUrl }}"></td>
         <td>{{ s.name }}</td>
         <td>{{ s.isOvalSeries | ovalRoadFilter }}</td>

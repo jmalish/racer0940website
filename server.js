@@ -133,6 +133,20 @@ app.get('/api/series', function(req, res) {
         res.json(JSON.parse(series));
     });
 });
+
+// cars in series api
+app.get('/api/carsInSeries/:seriesId', function(req, res) {
+    var seriesId = mysql.escape(req.params.seriesId);
+
+    var myQuery = "SELECT cars_in_series.seriesId, cars_in_series.carId, cars.name, cars.iRacingId FROM cars LEFT JOIN cars_in_series ON cars.iRacingId = cars_in_series.carId WHERE cars_in_series.seriesId = " +
+        seriesId;
+
+    sqlConnection.query(myQuery, function(err, data) {
+        var carsInSeries = JSON.stringify(data);
+
+        res.json(JSON.parse(carsInSeries));
+    });
+});
 // </editor-fold>
 
 // 404 (THIS ALWAYS NEEDS TO BE LAST)
