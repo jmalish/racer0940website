@@ -31,6 +31,10 @@ racerApp.config(['$routeProvider',
                 templateUrl: 'partials/series-list.html',
                 controller: 'seriesCtrl'
             }).
+            when('/series/:seriesId', {
+                templateUrl: 'partials/series-details.html',
+                controller: 'seriesDetailsCtrl'
+            }).
             otherwise({
                 templateUrl: 'partials/404.html'
             });

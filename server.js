@@ -134,11 +134,25 @@ app.get('/api/series', function(req, res) {
     });
 });
 
+// series details api
+app.get('/api/series/:seriesId', function(req, res) {
+    var seriesId = mysql.escape(req.params.seriesId);
+
+    var myQuery = "SELECT * FROM series WHERE series.id = " +
+        seriesId;
+
+    sqlConnection.query(myQuery, function(err, data) {
+        var seriesDetails = JSON.stringify(data);
+
+        res.json(JSON.parse(seriesDetails));
+    });
+});
+
 // cars in series api
 app.get('/api/carsInSeries/:seriesId', function(req, res) {
     var seriesId = mysql.escape(req.params.seriesId);
 
-    var myQuery = "SELECT cars_in_series.seriesId, cars_in_series.carId, cars.name, cars.iRacingId FROM cars LEFT JOIN cars_in_series ON cars.iRacingId = cars_in_series.carId WHERE cars_in_series.seriesId = " +
+    var myQuery = "SELECT cars.name, cars.imageURL, cars.isDefaultContent FROM cars LEFT JOIN cars_in_series ON cars.iRacingId = cars_in_series.carId WHERE cars_in_series.seriesId = " +
         seriesId;
 
     sqlConnection.query(myQuery, function(err, data) {

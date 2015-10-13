@@ -74,3 +74,15 @@ racerControllers.controller('seriesCtrl', function($scope, $http, $rootScope) {
 
     $rootScope.pageTitle = "Series :: racer0940.com";
 });
+
+racerControllers.controller('seriesDetailsCtrl', function($scope, $http, $routeParams, $rootScope) {
+    $http.get('/api/series/' + $routeParams.seriesId).success(function(data) {
+        $scope.series = data[0];
+
+        $rootScope.pageTitle = "Series Detail for " + data[0].name + " :: racer0940.com";
+    });
+
+    $http.get('/api/carsinseries/' + $routeParams.seriesId).success(function(data) {
+        $scope.cars = data;
+    });
+});

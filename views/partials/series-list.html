@@ -1,6 +1,6 @@
 <table class="seriesList">
     <tr>
-        <th></th>
+        <th>Click the logo for more details</th>
         <th><label for="name">Name</label><br><input id="name" ng-model="search.name"></th>
         <th>
             <label for="type">Type</label><br>
@@ -34,7 +34,7 @@
         </th>
     </tr>
     <tr ng-repeat="s in series | filter:search | orderBy:'minLicenseId'" ng-if="s.minLicenseId >= minLicense">
-        <td><img class="seasonLogo" src="images/seasonLogos/{{ s.logoImgUrl }}"></td>
+        <td><a href="#/series/{{ s.id }}"><img class="seasonLogo" src="images/seasonLogos/{{ s.logoImgUrl }}"></a></td>
         <td>{{ s.name }}</td>
         <td>{{ s.isOvalSeries | ovalRoadFilter }}</td>
         <td>{{ s.isFixed | checkmarkFilter }}</td>

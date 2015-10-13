@@ -1,0 +1,15 @@
+<h1>Series overview for {{ series.name }}</h1>
+<img src="/images/seasonBanners/{{series.bannerImgUrl}}">
+
+<p>Mininum license allowed: {{ series.minLicenseId | licenseFilter }} | Maximum license allowed: {{ series.maxLicenseId | licenseFilter }}</p>
+
+<p>This series {{series.isFixed | isFixedFilter }}, it has {{ series.cautionType | cautionTypeFilter | lowercase }}, and it consists primarily of {{ series.isOvalSeries | ovalRoadFilter | lowercase }} races.</p>
+
+<h2>Cars used in this series:</h2>
+<ul ng-repeat="car in cars">
+    <li><div>
+        {{car.name}}<br>
+        <img class="carImage" src="/images/carPortraits/{{ car.imageURL }}"><br>
+        Default content: {{ car.isDefault | checkmarkFilter}}
+    </div></li>
+</ul>
