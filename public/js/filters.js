@@ -83,6 +83,22 @@ angular.module('racerFilters', []).
        }
     }).filter('isFixedFilter', function() {
         return function(input) {
-            return input ? "is a fixed setup series" : "is an open setup series";
+            return input ? "Fixed" : "Open";
+        }
+    }).filter('lapsTimeFilter', function() {
+        return function(input) {
+            if (input == 0) {
+                return "";
+            } else {
+                return input;
+            }
+        }
+    }).filter('lapsTimeTitleFilter', function() {
+        return function(input) {
+            if (input == 0) {
+                return "Laps";
+            } else {
+                return "Minutes";
+            }
         }
     });

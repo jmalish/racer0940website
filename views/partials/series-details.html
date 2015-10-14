@@ -1,15 +1,43 @@
-<h1>Series overview for {{ series.name }}</h1>
 <img src="/images/seasonBanners/{{series.bannerImgUrl}}">
 
-<p>Mininum license allowed: {{ series.minLicenseId | licenseFilter }} | Maximum license allowed: {{ series.maxLicenseId | licenseFilter }}</p>
-
-<p>This series {{series.isFixed | isFixedFilter }}, it has {{ series.cautionType | cautionTypeFilter | lowercase }}, and it consists primarily of {{ series.isOvalSeries | ovalRoadFilter | lowercase }} races.</p>
+<table>
+    <tr>
+        <td>Min<br>License</td>
+        <td>Max<br>License</td>
+        <td>Setups</td>
+        <td>Caution Types</td>
+        <td>Series<br>Type</td>
+    </tr>
+    <tr>
+        <td>{{series.minLicenseId | licenseFilter}}</td>
+        <td>{{series.maxLicenseId | licenseFilter}}</td>
+        <td>{{series.isFixed | isFixedFilter}}</td>
+        <td>{{series.cautionType | cautionTypeFilter}}</td>
+        <td>{{series.isOvalSeries | ovalRoadFilter}}</td>
+    </tr>
+</table>
 
 <h2>Cars used in this series:</h2>
-<ul ng-repeat="car in cars">
-    <li><div>
-        {{car.name}}<br>
+<ul class="carDetails">
+    <li ng-repeat="car in cars">
+        <p>{{car.name}}</p>
         <img class="carImage" src="/images/carPortraits/{{ car.imageURL }}"><br>
-        Default content: {{ car.isDefault | checkmarkFilter}}
-    </div></li>
+        <p>Default content: {{ car.isDefault | checkmarkFilter}}</p>
+    </li>
 </ul>
+
+<h2>Events List:</h2>
+<table>
+    <tr>
+        <th>Start Date</th>
+        <th></th>
+        <th>Track Name (Default Content)</th>
+        <th>Length</th>
+    </tr>
+    <tr ng-repeat="event in events" ng-class="{currentWeek: currentWeek == event.raceWeek}">
+        <td ng-class="{currentWeek: currentWeek == event.raceWeek}"><br><br>{{event.startDate | date }}</td>
+        <td><img class="configImage" src="images/trackLayouts/{{event.layoutImageURL}}"></td>
+        <td>{{event.parentName}}<br>{{event.configName}}<br>{{event.isDefaultContent | checkmarkFilter}}</td>
+        <td>{{ event.time | lapsTimeFilter}}{{event.laps | lapsTimeFilter}} {{event.time | lapsTimeTitleFilter}}</td>
+    </tr>
+</table>

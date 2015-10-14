@@ -161,6 +161,19 @@ app.get('/api/carsInSeries/:seriesId', function(req, res) {
         res.json(JSON.parse(carsInSeries));
     });
 });
+
+app.get('/api/eventsInSeries/:seriesId', function(req, res) {
+    var seriesId = mysql.escape(req.params.seriesId);
+
+    var myQuery = "SELECT events.id, events.startDate, events.laps, events.time, events.raceWeek, configs.name as configName, configs.layoutImageURL, tracks.name as parentName, tracks.isDefaultContent FROM events LEFT JOIN configs on configs.iracingId = events.trackId LEFT JOIN tracks on tracks.id = configs.trackId where events.seasonId = " +
+        seriesId;
+
+    sqlConnection.query(myQuery, function(err, data) {
+        var eventsInSeries = JSON.stringify(data);
+
+        res.json(JSON.parse(eventsInSeries));
+    });
+});
 // </editor-fold>
 
 // 404 (THIS ALWAYS NEEDS TO BE LAST)

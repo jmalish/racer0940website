@@ -75,7 +75,7 @@ racerControllers.controller('seriesCtrl', function($scope, $http, $rootScope) {
     $rootScope.pageTitle = "Series :: racer0940.com";
 });
 
-racerControllers.controller('seriesDetailsCtrl', function($scope, $http, $routeParams, $rootScope) {
+racerControllers.controller('seriesDetailsCtrl', function($scope, $http, $routeParams, $rootScope, $filter) {
     $http.get('/api/series/' + $routeParams.seriesId).success(function(data) {
         $scope.series = data[0];
 
@@ -84,5 +84,20 @@ racerControllers.controller('seriesDetailsCtrl', function($scope, $http, $routeP
 
     $http.get('/api/carsinseries/' + $routeParams.seriesId).success(function(data) {
         $scope.cars = data;
+    });
+
+    $http.get('/api/eventsinseries/' + $routeParams.seriesId).success(function(data) {
+        $scope.events = data;
+
+        today = $filter('date')(new Date(), 'MM dd yyyy hh mm ss'); // gets current date and formats it
+        $scope.currentWeek = 0;
+
+        angular.forEach($scope.events, function (value, index) {
+            startDate = $filter('date')(new Date(value.startDate), 'MM dd yyyy hh mm ss');
+
+            if (today > startDate) {
+                $scope.currentWeek = value.raceWeek;
+            }
+        });
     });
 });
