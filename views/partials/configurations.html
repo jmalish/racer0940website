@@ -1,0 +1,19 @@
+<table>
+    <p><a href="#/">Go back to track list</a></p>
+    <tr>
+        <th>Layout</th>
+        <th>Name<br><input ng-model="search.name"></th>
+        <th>Parent Track<br><input ng-model="search.parentName"></th>
+        <th>Type<br><select ng-model="search.isOval">
+            <option value="">Any</option>
+            <option value="1">Oval Only</option>
+            <option value="0">Road Only</option>
+        </select></th>
+    </tr>
+    <tr ng-repeat="config in configs | filter:search ">
+        <td><img src="images/trackLayouts/{{ config.layoutImageURL }}"></td>
+        <td>{{ config.name }}</td>
+        <td><a href="#tracks/{{ config.parentShortName }}">{{ config.parentName }}</a></td>
+        <td>{{ config.isOval | ovalRoadFilter }}</td>
+    </tr>
+</table>

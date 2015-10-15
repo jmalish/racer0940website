@@ -1,0 +1,18 @@
+<table class="randomRace">
+    <tr>
+        <td colspan="2" class="randomRaceForm">
+            <button ng-click="reloadPage()">New race</button> <!-- TODO: make filter form for random race page -->
+        </td>
+    </tr>
+    <tr>
+        <td class="carDetails"><h2>{{ cars[randCar].name }} @ </h2></td>
+        <td class="trackDetails"><h2>{{ tracks[randTrack].parentName }} - {{ tracks[randTrack].name }}</h2></td>
+    </tr>
+    <tr>
+        <td><img src="images/carPortraits/{{ cars[randCar].imageURL }}"/></td>
+        <td>
+            <img class="configImage" src="images/trackLayouts/{{ tracks[randTrack].layoutImageURL }}">
+            <img class="trackLogo" src="images/trackLogos/{{ tracks[randTrack].logoURL }}">
+        </td>
+    </tr>
+</table>

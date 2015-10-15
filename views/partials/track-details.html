@@ -1,15 +1,15 @@
 <div class="trackDetails">
-    <h1>Track overview for {{ configs[0].track_name}}</h1>
+    <h1>Track overview for {{ configs[0].parentName}}</h1>
     <div class="detailImages">
-        <img class="trackLogo" src="images/trackLogos/{{ configs[0].trackLogoURL }}">
-        <img class="trackMap" src="images/trackMaps/{{ configs[0].mapImageURL }}">
+        <img class="trackLogo" src="images/trackLogos/{{ configs[0].parentLogoImgUrl }}">
+        <img class="trackMap" src="images/trackMaps/{{ configs[0].parentMapImgUrl }}">
     </div>
 
-    <p>{{ configs[0].track_name}} has {{ configs.length }} configurations. {{ configs[0].hasNight | hasNightFilter }} {{ configs[0].track_isDefaultContent | defaultContentFilter }}</p>
+    <p>{{ configs[0].parentName}} has {{ configs.length }} configurations. {{ configs[0].hasNight | hasNightFilter }} {{ configs[0].parentIsDefaultContent | defaultContentFilter }}</p>
 
     <table>
         <div class="filterDiv">
-            <label for="searchName">Search by name: </label><input id="searchName" ng-model="search.config_name">
+            <label for="searchName">Search by name: </label><input id="searchName" ng-model="search.name">
             <label for="searchType">Filter by type:</label>
             <select id="searchType" ng-model="search.isOval">
                 <option value="">Any</option>
@@ -23,8 +23,8 @@
             <th>Type</th>
         </tr>
         <tr ng-repeat="config in configs | filter:search">
-            <td><img src="images/trackLayouts/{{ config.configLayoutImageURL }}"></td>
-            <td>{{ config.config_name }}</td>
+            <td><img src="images/trackLayouts/{{ config.layoutImageURL }}"></td>
+            <td>{{ config.name }}</td>
             <td>{{ config.isOval | ovalRoadFilter }}</td>
         </tr>
     </table>

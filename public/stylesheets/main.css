@@ -152,7 +152,7 @@ table, th, tr, td {
     margin: 10px;
 }
 
-table .carImage, table .trackLogo, table .configImage {
+table .carImage, table .trackLogo, table .configImage, .carImage {
     height: 100px;
     width: auto;
 }
@@ -169,10 +169,9 @@ a {
     width: 85%;
 }
 
-.carDetails {
-    width: 30%;
-    vertical-align: top;
-    text-align: right;
+.carDetails li {
+    list-style-type: none;
+    display: inline-block;
 }
 
 .trackDetails {
@@ -209,7 +208,7 @@ a {
 }
 
 .randomRaceForm {
-    text-align: left;;
+    text-align: center !important;
 }
 
 .detailImages img {
@@ -219,4 +218,26 @@ a {
 .trackLogo, .trackMap {
     height: 150px;
     width: auto;
+}
+
+.seriesList td {
+    max-width: 200px;
+}
+
+.seriesList td:first-child {
+    width: 265px;
+}
+
+.seasonLogo {
+    height: 100px;
+    width: auto;
+    margin: 0;
+}
+
+.currentWeek {
+    border: 3px solid black;
+}
+
+tr .currentWeek::before {
+    content: 'Current Week'
 }

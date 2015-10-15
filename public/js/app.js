@@ -11,11 +11,31 @@ racerApp.config(['$routeProvider',
                 templateUrl: 'partials/track-list.html',
                 controller: 'trackListCtrl'
             }).
-            when('/:trackShortname', {
+            when('/configurations', {
+                templateUrl: 'partials/configurations.html',
+                controller: 'configListCtrl'
+            }).
+            when('/cars', {
+                templateUrl: 'partials/car-list.html',
+                controller: 'carListCtrl'
+            }).
+            when('/randomRace', {
+                templateUrl: 'partials/randomrace.html',
+                controller: 'randomRaceCtrl'
+            }).
+            when('/tracks/:trackShortname', {
                 templateUrl: 'partials/track-details.html',
                 controller: 'trackDetailsCtrl'
             }).
+            when('/series', {
+                templateUrl: 'partials/series-list.html',
+                controller: 'seriesCtrl'
+            }).
+            when('/series/:seriesId', {
+                templateUrl: 'partials/series-details.html',
+                controller: 'seriesDetailsCtrl'
+            }).
             otherwise({
-                redirectTo: '/tracks'
+                templateUrl: 'partials/404.html'
             });
     }]);
