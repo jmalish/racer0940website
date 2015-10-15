@@ -8,7 +8,7 @@ var mysql = require('mysql');
 var bodyparser = require('body-parser');
 
 // setting view engine to use ejs
-var port = 81; // port server listens on
+var port = 80; // port server listens on
 
 app.set('view engine', 'ejs');
 
