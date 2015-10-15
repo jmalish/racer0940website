@@ -61,7 +61,7 @@ racerControllers.controller('randomRaceCtrl', function($scope, $http, $rootScope
 
     $rootScope.pageTitle = "Random Race Generator :: racer0940.com";
 
-    reloadPage();
+    $scope.reloadPage();
 });
 
 // series
