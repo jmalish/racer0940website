@@ -35,7 +35,7 @@
     </tr>
     <tr ng-repeat="s in series | filter:search | orderBy:'minLicenseId'" ng-if="s.minLicenseId >= minLicense">
         <td><a href="#/series/{{ s.id }}"><img class="seasonLogo" src="images/seasonLogos/{{ s.logoImgUrl }}"></a></td>
-        <td>{{ s.name }}</td>
+        <td><a href="#/series/{{ s.id }}">{{ s.name }}</a></td>
         <td>{{ s.isOvalSeries | ovalRoadFilter }}</td>
         <td>{{ s.isFixed | checkmarkFilter }}</td>
         <td>{{ s.isTeam | checkmarkFilter }}</td>
