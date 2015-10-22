@@ -101,3 +101,18 @@ racerControllers.controller('seriesDetailsCtrl', function($scope, $http, $routeP
         });
     });
 });
+
+racerControllers.controller('currentRacesCtrl', function($scope, $http, $routeParams, $rootScope) {
+    $http.get('/api/currentWeek').success(function(data) {
+        $scope.races = data;
+    });
+
+    $http.get('/api/carsInSeries').success(function(data) {
+        $scope.cars = data;
+    });
+
+    $scope.minLicense = 0
+
+
+    $rootScope.pageTitle = "Races of the Week :: racer0940.com";
+});

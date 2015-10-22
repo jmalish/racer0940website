@@ -1,0 +1,37 @@
+<table class="weeksRaces">
+    <tr>
+        <td><label for="raceType">Filter series type:</label>
+            <select id="raceType" ng-model="search.isOvalSeries">
+                <option value="">Any</option>
+                <option value="1">Oval Series Only</option>
+                <option value="0">Road Series Only</option>
+            </select><br>
+            <label for="seriesName">Series name: </label><input id="seriesName" size="15" ng-model="search.seriesName">
+        </td>
+        <td>Track</td>
+        <td>Race Details<br>
+            <label for="trackName">Search for Track: </label><input id="trackName" size="15" ng-model="search.parentName"> <br>
+        </td>
+        <td>Length</td>
+        <td>License Required<br>
+        <select id="minLicense" ng-model="minLicense">
+            <option value="0" selected>Rookie</option>
+            <option value="3">D Class</option>
+            <option value="7">C Class</option>
+            <option value="11">B Class</option>
+            <option value="15">A Class</option>
+            <option value="19">Pro</option>
+        </select>
+        <td>Cars Used</td>
+    </tr>
+    <tr ng-repeat="race in races | filter:search | orderBy:'minLicenseId'" >
+        <td><a href="#/series/{{ race.seriesId }}"><img src="images/seasonLogos/{{ race.seriesLogo }}"></a></td>
+        <td><img src="images/trackLayouts/{{race.layoutImageURL}}"></td>
+        <td><b>{{race.seriesName}}</b><br><br>{{race.parentName}}<br>{{race.configName}}</td>
+        <td>{{ race.time | lapsTimeFilter}}{{race.laps | lapsTimeFilter}} {{race.time | lapsTimeTitleFilter}}</td>
+        <td>{{race.minLicenseId | licenseFilter}} to {{race.maxLicenseId | licenseFilter}}</td>
+        <td class="carList"><ul ng-repeat="car in cars">
+            <li class="carName" ng-if="car.seriesId == race.seriesId">- {{car.name}}</li>
+        </ul></td>
+    </tr>
+</table>

@@ -35,6 +35,10 @@ racerApp.config(['$routeProvider',
                 templateUrl: 'partials/series-details.html',
                 controller: 'seriesDetailsCtrl'
             }).
+            when('/currentRaces', {
+                templateUrl: 'partials/current_week.html',
+                controller: 'currentRacesCtrl'
+            }).
             otherwise({
                 templateUrl: 'partials/404.html'
             });

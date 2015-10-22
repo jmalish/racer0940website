@@ -148,6 +148,18 @@ app.get('/api/series/:seriesId', function(req, res) {
     });
 });
 
+// cars in series generic
+app.get('/api/carsInSeries', function(req, res) {
+
+    var myQuery = "SELECT cars_in_series.*, cars.name FROM cars_in_series LEFT JOIN cars on cars.iRacingId = cars_in_series.carId;";
+
+    sqlConnection.query(myQuery, function(err, data) {
+        var carsInSeries = JSON.stringify(data);
+
+        res.json(JSON.parse(carsInSeries));
+    });
+});
+
 // cars in series api
 app.get('/api/carsInSeries/:seriesId', function(req, res) {
     var seriesId = mysql.escape(req.params.seriesId);
@@ -172,6 +184,31 @@ app.get('/api/eventsInSeries/:seriesId', function(req, res) {
         var eventsInSeries = JSON.stringify(data);
 
         res.json(JSON.parse(eventsInSeries));
+    });
+});
+
+// current week races
+app.get('/api/currentWeek', function(req, res) {
+    var today = new Date();
+    var oneWeek = new Date();
+    oneWeek.setDate(oneWeek.getDate() - 7);
+
+
+
+    var myQuery = "SELECT events.id as eventId, events.startDate, events.laps, events.time, events.raceWeek, events.trackId, " +
+        "configs.name as configName, configs.layoutImageURL," +
+        "tracks.name as parentName, tracks.isDefaultContent, " +
+        "series.name as seriesName, series.id as seriesId, series.logoImgUrl as seriesLogo, series.minLicenseId, series.isOvalSeries, series.maxLicenseId " +
+        "FROM events " +
+        "LEFT JOIN configs on configs.iracingId = events.trackId " +
+        "LEFT JOIN tracks on tracks.id = configs.trackId " +
+        "LEFT JOIN series on series.id = events.seasonId " +
+        "where startDate > '" + oneWeek.toISOString() + "' and startDate < '" + today.toISOString() + "'";
+
+    sqlConnection.query(myQuery, function(err, data) {
+        var races = JSON.stringify(data);
+
+        res.json(JSON.parse(races));
     });
 });
 // </editor-fold>

@@ -241,3 +241,26 @@ a {
 tr .currentWeek::before {
     content: 'Current Week'
 }
+
+.weeksRaces img {
+    height: 100px;
+    width: auto;
+}
+
+.weeksRaces select {
+    margin-bottom: 2px;
+}
+
+.carList {
+    max-width: 250px;
+}
+
+.carList ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.carList li {
+    margin: 2px;
+}
