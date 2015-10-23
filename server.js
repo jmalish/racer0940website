@@ -1,23 +1,23 @@
 // server.js
 // load prerequisites
-var express = require('express');
+var express = require('express');   // basic page builder
 var app = express();
-var request = require('request');
-var fs = require('fs');
-var mysql = require('mysql');
-var bodyparser = require('body-parser');
-
-// setting view engine to use ejs
-var port = 81; // port server listens on
-
-app.set('view engine', 'ejs');
+var fs = require('fs'); // file reader
+var mysql = require('mysql'); // accesses and reads/writes mySQL database
+var bodyparser = require('body-parser'); // parses bodies (used with POST requests and junk)
+var morgan = require('morgan'); // log requests to console
+var jwt = require('jsonwebtoken'); // creates and verifies json web tokens
 
 // general app setup
+var port = 81; // port server listens on
+
+app.set('view engine', 'ejs'); // setting view engine to use ejs
 app.use(express.static(__dirname + '/public'))
     .use('/node', express.static(__dirname + '/node_modules'))
     .use('/partials', express.static(__dirname + '/views/partials'))
     .use(bodyparser.urlencoded({ extended: false}))
     .use(bodyparser.json());
+    // .use(morgan('dev')); // use morgan to log requests to console, may want to remove later
 
 // <editor-fold desc="MySQL setup">
 // setting up mysql
@@ -72,6 +72,9 @@ app.get('/', function(req, res) {
 // JSON //
 //////////
 // <editor-fold desc="JSON/API">
+// auth stuff
+var secretAuth = secrets.passwords.auth;
+
 // track api
 app.get('/api/tracks', function(req, res) {
     sqlConnection.query('SELECT * FROM tracks', function(err, rows) {
